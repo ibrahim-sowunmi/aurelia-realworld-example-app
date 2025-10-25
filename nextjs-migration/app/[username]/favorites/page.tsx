@@ -5,7 +5,7 @@ import ProfileTabs from '@/app/_components/Profile/ProfileTabs';
 import ProfileArticles from '@/app/_components/Profile/ProfileArticles';
 import type { Profile } from '@/types';
 
-export default async function ProfilePage({
+export default async function ProfileFavoritesPage({
   params,
 }: {
   params: { username: string };
@@ -23,7 +23,7 @@ export default async function ProfilePage({
           <div className="row">
             <div className="col-xs-12 col-md-10 offset-md-1">
               <ProfileTabs username={username} />
-              <ProfileArticles username={username} />
+              <ProfileArticles username={username} favoritedMode={true} />
             </div>
           </div>
         </div>
