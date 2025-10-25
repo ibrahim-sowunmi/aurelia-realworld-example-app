@@ -1,9 +1,12 @@
 import { profileService } from '@/lib/services/profiles';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 import ProfileBanner from '@/app/_components/Profile/ProfileBanner';
 import ProfileTabs from '@/app/_components/Profile/ProfileTabs';
 import ProfileArticles from '@/app/_components/Profile/ProfileArticles';
 import type { Profile } from '@/types';
+
+export const revalidate = 120;
 
 export default async function ProfileFavoritesPage({
   params,
@@ -23,7 +26,9 @@ export default async function ProfileFavoritesPage({
           <div className="row">
             <div className="col-xs-12 col-md-10 offset-md-1">
               <ProfileTabs username={username} />
-              <ProfileArticles username={username} favoritedMode={true} />
+              <Suspense fallback={<div className="article-preview">Loading articles...</div>}>
+                <ProfileArticles username={username} favoritedMode={true} />
+              </Suspense>
             </div>
           </div>
         </div>

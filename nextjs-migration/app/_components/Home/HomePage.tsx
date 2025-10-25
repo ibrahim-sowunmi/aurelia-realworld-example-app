@@ -3,12 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/state/AuthContext';
 import { articleService } from '@/lib/services/articles';
-import { tagService } from '@/lib/services/tags';
 import Banner from './Banner';
 import FeedToggle from './FeedToggle';
 import ArticleList from '../ArticleList';
 import TagList from './TagList';
-import type { Article, ArticlesResponse } from '@/types';
+import type { Article } from '@/types';
 
 interface ArticleParams {
   limit: number;
@@ -18,23 +17,30 @@ interface ArticleParams {
   favorited?: string;
 }
 
-export default function HomePage() {
+interface HomePageProps {
+  initialArticles: Article[];
+  initialArticlesCount: number;
+  initialTags: string[];
+}
+
+export default function HomePage({
+  initialArticles,
+  initialArticlesCount,
+  initialTags
+}: HomePageProps) {
   const { isAuthenticated } = useAuth();
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [tags, setTags] = useState<string[]>([]);
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [tags, setTags] = useState<string[]>(initialTags);
   const [currentFeed, setCurrentFeed] = useState<'all' | 'feed' | 'tag'>('all');
   const [currentTag, setCurrentTag] = useState<string | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const [articlesCount, setArticlesCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [articlesCount, setArticlesCount] = useState(initialArticlesCount);
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 10;
 
   useEffect(() => {
-    loadArticles();
-    loadTags();
-  }, []);
-
-  useEffect(() => {
+    if (currentFeed === 'all' && !currentTag && currentPage === 1) return;
+    
     loadArticles();
   }, [currentFeed, currentTag, currentPage]);
 
@@ -61,15 +67,6 @@ export default function HomePage() {
       console.error('Error loading articles:', error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const loadTags = async () => {
-    try {
-      const tags = await tagService.getList();
-      setTags(tags);
-    } catch (error) {
-      console.error('Error loading tags:', error);
     }
   };
 
