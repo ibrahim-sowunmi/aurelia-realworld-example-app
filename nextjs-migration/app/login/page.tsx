@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/lib/state/AuthContext';
 
 export default function LoginPage() {
@@ -11,6 +12,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
+  const canSave = useMemo(() => {
+    return email !== '' && password !== '';
+  }, [email, password]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +39,7 @@ export default function LoginPage() {
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign in</h1>
             <p className="text-xs-center">
-              <a href="/register">Need an account?</a>
+              <Link href="/register" className="text-green-600 hover:text-green-700">Need an account?</Link>
             </p>
 
             {error && (
@@ -68,7 +73,7 @@ export default function LoginPage() {
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !canSave}
                 >
                   {isLoading ? 'Signing in...' : 'Sign in'}
                 </button>
