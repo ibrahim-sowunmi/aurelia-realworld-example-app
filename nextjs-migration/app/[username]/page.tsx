@@ -1,6 +1,6 @@
+import React, { Suspense } from 'react';
 import { profileService } from '@/lib/services/profiles';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import ProfileBanner from '@/app/_components/Profile/ProfileBanner';
 import ProfileTabs from '@/app/_components/Profile/ProfileTabs';
 import ProfileArticles from '@/app/_components/Profile/ProfileArticles';

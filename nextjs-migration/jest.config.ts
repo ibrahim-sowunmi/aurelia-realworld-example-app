@@ -17,7 +17,15 @@ const config: Config = {
         jsx: 'react',
       },
     }],
+    '^.+\\.jsx?$': ['ts-jest', {
+      tsconfig: {
+        jsx: 'react',
+      },
+    }],
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(marked|isomorphic-dompurify|dompurify|next)/)',
+  ],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   collectCoverage: true,
