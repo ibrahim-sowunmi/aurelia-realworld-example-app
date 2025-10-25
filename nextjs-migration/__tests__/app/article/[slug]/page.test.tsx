@@ -3,9 +3,14 @@ import { render } from '@testing-library/react';
 import ArticlePage from '../../../../app/article/[slug]/page';
 import { articleService } from '../../../../lib/services/articles';
 import { commentService } from '../../../../lib/services/comments';
+import type { Article, Comment } from '@/types';
+
+const mockNotFound = jest.fn();
+const mockGetArticle = jest.fn() as jest.Mock<Promise<Article>, [string]>;
+const mockGetComments = jest.fn() as jest.Mock<Promise<Comment[]>, [string]>;
 
 jest.mock('next/navigation', () => ({
-  notFound: jest.fn(),
+  notFound: mockNotFound,
 }));
 
 jest.mock('../../../../app/_components/Article/ArticleContent', () => ({
@@ -15,18 +20,18 @@ jest.mock('../../../../app/_components/Article/ArticleContent', () => ({
 
 jest.mock('../../../../lib/services/articles', () => ({
   articleService: {
-    getArticle: jest.fn(),
+    getArticle: mockGetArticle,
   },
 }));
 
 jest.mock('../../../../lib/services/comments', () => ({
   commentService: {
-    getComments: jest.fn(),
+    getComments: mockGetComments,
   },
 }));
 
 describe('ArticlePage', () => {
-  const mockArticle = {
+  const mockArticle: Article = {
     slug: 'test-article',
     title: 'Test Article',
     body: 'Test body content',
@@ -44,7 +49,7 @@ describe('ArticlePage', () => {
     },
   };
 
-  const mockComments = [
+  const mockComments: Comment[] = [
     {
       id: 1,
       body: 'Test comment',
@@ -61,8 +66,8 @@ describe('ArticlePage', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    articleService.getArticle.mockResolvedValue(mockArticle);
-    commentService.getComments.mockResolvedValue(mockComments);
+    mockGetArticle.mockResolvedValue(mockArticle);
+    mockGetComments.mockResolvedValue(mockComments);
   });
 
   it('renders ArticleContent with article and comments data', async () => {
@@ -73,17 +78,17 @@ describe('ArticlePage', () => {
     
     expect(getByTestId('article-content')).toBeInTheDocument();
     
-    expect(articleService.getArticle).toHaveBeenCalledWith('test-article');
-    expect(commentService.getComments).toHaveBeenCalledWith('test-article');
+    expect(mockGetArticle).toHaveBeenCalledWith('test-article');
+    expect(mockGetComments).toHaveBeenCalledWith('test-article');
   });
 
   it('calls notFound when article fetch fails', async () => {
-    articleService.getArticle.mockRejectedValue(new Error('Article not found'));
+    mockGetArticle.mockRejectedValue(new Error('Article not found'));
     
     const params = { slug: 'non-existent-article' };
     
     await ArticlePage({ params });
     
-    expect(notFound).toHaveBeenCalled();
+    expect(mockNotFound).toHaveBeenCalled();
   });
 });

@@ -2,14 +2,18 @@ import { render } from '@testing-library/react';
 import { notFound } from 'next/navigation';
 import ProfilePage from '../../../app/[username]/page';
 import { profileService } from '../../../lib/services/profiles';
+import type { Profile } from '@/types';
+
+const mockNotFound = jest.fn();
+const mockGetProfile = jest.fn() as jest.Mock<Promise<Profile>, [string]>;
 
 jest.mock('next/navigation', () => ({
-  notFound: jest.fn(),
+  notFound: mockNotFound,
 }));
 
 jest.mock('../../../lib/services/profiles', () => ({
   profileService: {
-    getProfile: jest.fn(),
+    getProfile: mockGetProfile,
   },
 }));
 
@@ -29,7 +33,7 @@ jest.mock('../../../app/_components/Profile/ProfileArticles', () => ({
 }));
 
 describe('ProfilePage', () => {
-  const mockProfile = {
+  const mockProfile: Profile = {
     username: 'testuser',
     bio: 'Test bio',
     image: 'https://example.com/image.jpg',
@@ -38,7 +42,7 @@ describe('ProfilePage', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    profileService.getProfile.mockResolvedValue(mockProfile);
+    mockGetProfile.mockResolvedValue(mockProfile);
   });
 
   it('renders profile components with profile data', async () => {
@@ -51,16 +55,16 @@ describe('ProfilePage', () => {
     expect(getByTestId('profile-tabs')).toBeInTheDocument();
     expect(getByTestId('profile-articles')).toBeInTheDocument();
     
-    expect(profileService.getProfile).toHaveBeenCalledWith('testuser');
+    expect(mockGetProfile).toHaveBeenCalledWith('testuser');
   });
 
   it('calls notFound when profile fetch fails', async () => {
-    profileService.getProfile.mockRejectedValue(new Error('Profile not found'));
+    mockGetProfile.mockRejectedValue(new Error('Profile not found'));
     
     const params = { username: 'non-existent-user' };
     
     await ProfilePage({ params });
     
-    expect(notFound).toHaveBeenCalled();
+    expect(mockNotFound).toHaveBeenCalled();
   });
 });
