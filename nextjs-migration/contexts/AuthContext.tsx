@@ -39,6 +39,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    const syncTokenWithCookie = () => {
+      const token = jwtService.getToken();
+      if (token) {
+        document.cookie = `conduit_token=${token}; path=/; max-age=2592000`; // 30 days
+      } else {
+        document.cookie = 'conduit_token=; path=/; max-age=0';
+      }
+    };
+
+    syncTokenWithCookie();
+    
     populate();
   }, [populate]);
 
