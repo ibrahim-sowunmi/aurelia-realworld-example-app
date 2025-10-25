@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/state/AuthContext';
 
@@ -14,6 +14,10 @@ export default function SettingsPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
+  const canSave = useMemo(() => {
+    return username.trim() !== '' && email.trim() !== '';
+  }, [username, email]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -122,7 +126,7 @@ export default function SettingsPage() {
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !canSave}
                 >
                   {isLoading ? 'Updating...' : 'Update Settings'}
                 </button>
