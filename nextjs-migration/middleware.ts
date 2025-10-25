@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('jwt')?.value;
+  const token = req.cookies.get('jwtToken')?.value;
   const path = req.nextUrl.pathname;
 
   const protectedPaths = ['/settings', '/editor'];
