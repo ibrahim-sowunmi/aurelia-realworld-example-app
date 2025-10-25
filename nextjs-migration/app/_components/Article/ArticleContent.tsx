@@ -15,7 +15,7 @@ interface ArticleContentProps {
 }
 
 export default function ArticleContent({ article, initialComments }: ArticleContentProps) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [comments, setComments] = useState<CommentType[]>(initialComments);
   
   const handleAddComment = async (body: string) => {
@@ -66,20 +66,28 @@ export default function ArticleContent({ article, initialComments }: ArticleCont
         
         <div className="row">
           <div className="col-xs-12 col-md-8 offset-md-2">
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <CommentForm 
                 slug={article.slug}
                 onAddComment={handleAddComment}
               />
+            ) : (
+              <p className="text-center">
+                <a href="/login">Sign in</a> or <a href="/register">sign up</a> to add comments on this article.
+              </p>
             )}
             
-            {comments.map(comment => (
-              <Comment 
-                key={comment.id}
-                comment={comment}
-                onDelete={handleDeleteComment}
-              />
-            ))}
+            {comments.length > 0 ? (
+              comments.map(comment => (
+                <Comment 
+                  key={comment.id}
+                  comment={comment}
+                  onDelete={user && user.username === comment.author.username ? handleDeleteComment : undefined}
+                />
+              ))
+            ) : (
+              <p className="text-center">No comments yet</p>
+            )}
           </div>
         </div>
       </div>

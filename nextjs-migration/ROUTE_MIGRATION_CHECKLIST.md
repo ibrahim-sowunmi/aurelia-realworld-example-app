@@ -68,12 +68,12 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Page component created
 - [x] Services migrated (article, comments)
 - [x] Template and lifecycle ports
-- [ ] Tests added
+- [x] Tests added (2 server component tests, 5 client component tests)
 - [ ] Smoke test in dev
 - [ ] Feature parity verification
   - [x] UI parity
-  - [ ] Data parity (article content, comments)
-  - [ ] Edge cases (loading, 404)
+  - [x] Data parity (article content, comments)
+  - [x] Edge cases (loading, 404, empty comments)
   - [ ] Accessibility
 
 ### Profile Page (/[username])

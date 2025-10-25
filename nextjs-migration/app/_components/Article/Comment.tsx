@@ -7,7 +7,7 @@ import type { Comment as CommentType } from '@/types';
 
 interface CommentProps {
   comment: CommentType;
-  onDelete: (id: number) => void;
+  onDelete?: (id: number) => void; // Make onDelete optional
 }
 
 export default function Comment({ comment, onDelete }: CommentProps) {
@@ -15,7 +15,9 @@ export default function Comment({ comment, onDelete }: CommentProps) {
   const canModify = user?.username === comment.author.username;
   
   const handleDelete = () => {
-    onDelete(comment.id);
+    if (onDelete) {
+      onDelete(comment.id);
+    }
   };
   
   return (
@@ -36,9 +38,9 @@ export default function Comment({ comment, onDelete }: CommentProps) {
           {comment.author.username}
         </Link>
         <span className="date-posted">{formatDate(comment.createdAt)}</span>
-        {canModify && (
+        {canModify && onDelete && (
           <span className="mod-options">
-            <i className="ion-trash-a" onClick={handleDelete}></i>
+            <i className="ion-trash-a" onClick={handleDelete} role="button" aria-label="Delete comment"></i>
           </span>
         )}
       </div>
