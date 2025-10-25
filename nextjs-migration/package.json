@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "isomorphic-dompurify": "^2.30.1",
     "marked": "^16.4.1",
     "next": "15.5.6",
