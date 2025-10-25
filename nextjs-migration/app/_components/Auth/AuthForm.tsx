@@ -36,9 +36,9 @@ export default function AuthForm({ type }: AuthFormProps) {
       };
       
       if (type === 'login') {
-        await login(email, password);
+        await login({ email, password });
       } else {
-        await register(username, email, password);
+        await register({ username, email, password });
       }
       
       router.push('/');
