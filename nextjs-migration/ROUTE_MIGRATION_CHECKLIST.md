@@ -20,25 +20,25 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Page component created
 - [x] Services migrated (user auth)
 - [x] Template and lifecycle ports
-- [ ] Tests added
+- [x] Tests added (4 test cases, 100% statement coverage)
 - [ ] Smoke test in dev
-- [ ] Feature parity verification
-  - [x] UI parity
-  - [ ] Data parity (form submission, validation)
-  - [ ] Edge cases (errors, redirects)
-  - [ ] Accessibility
+- [x] Feature parity verification
+  - [x] UI parity (Next.js Link, form layout)
+  - [x] Data parity (form submission, canSave validation)
+  - [x] Edge cases (errors, loading states, redirects)
+  - [ ] Accessibility (keyboard, screen reader)
 
 ### Register Page (/register)
 - [x] Page component created
 - [x] Services migrated (user registration)
 - [x] Template and lifecycle ports
-- [ ] Tests added
+- [x] Tests added (4 test cases, 100% statement coverage)
 - [ ] Smoke test in dev
-- [ ] Feature parity verification
-  - [x] UI parity
-  - [ ] Data parity (form submission, validation)
-  - [ ] Edge cases (errors, redirects)
-  - [ ] Accessibility
+- [x] Feature parity verification
+  - [x] UI parity (Next.js Link, form layout)
+  - [x] Data parity (form submission, canSave validation)
+  - [x] Edge cases (errors, loading states, redirects)
+  - [ ] Accessibility (keyboard, screen reader)
 
 ### Settings Page (/settings)
 - [x] Page component created

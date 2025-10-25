@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/lib/state/AuthContext';
 
 export default function RegisterPage() {
@@ -12,6 +13,10 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
+  const canSave = useMemo(() => {
+    return username !== '' && email !== '' && password !== '';
+  }, [username, email, password]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +40,7 @@ export default function RegisterPage() {
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign up</h1>
             <p className="text-xs-center">
-              <a href="/login">Have an account?</a>
+              <Link href="/login" className="text-green-600 hover:text-green-700">Have an account?</Link>
             </p>
 
             {error && (
@@ -79,7 +84,7 @@ export default function RegisterPage() {
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !canSave}
                 >
                   {isLoading ? 'Signing up...' : 'Sign up'}
                 </button>
