@@ -18,15 +18,15 @@ interface ArticleParams {
 }
 
 interface HomePageProps {
-  initialArticles: Article[];
-  initialArticlesCount: number;
-  initialTags: string[];
+  initialArticles?: Article[];
+  initialArticlesCount?: number;
+  initialTags?: string[];
 }
 
 export default function HomePage({
-  initialArticles,
-  initialArticlesCount,
-  initialTags
+  initialArticles = [],
+  initialArticlesCount = 0,
+  initialTags = []
 }: HomePageProps) {
   const { isAuthenticated } = useAuth();
   const [articles, setArticles] = useState<Article[]>(initialArticles);
@@ -39,10 +39,15 @@ export default function HomePage({
   const limit = 10;
 
   useEffect(() => {
+    if (initialArticles.length === 0) {
+      loadArticles();
+      return;
+    }
+    
     if (currentFeed === 'all' && !currentTag && currentPage === 1) return;
     
     loadArticles();
-  }, [currentFeed, currentTag, currentPage]);
+  }, [currentFeed, currentTag, currentPage, initialArticles.length]);
 
   const loadArticles = async () => {
     setIsLoading(true);

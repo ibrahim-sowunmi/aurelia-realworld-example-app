@@ -1,3 +1,16 @@
 {
-  "extends": ["next/core-web-vitals"]
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-trailing-spaces": "off",
+    "space-before-function-paren": "off",
+    "comma-dangle": "off",
+    "quotes": "off",
+    "@next/next/no-img-element": "warn",
+    "@next/next/no-css-tags": "warn",
+    "@next/next/no-html-link-for-pages": "warn",
+    "no-console": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-unused-vars": "warn",
+    "dot-notation": "warn"
+  }
 }
