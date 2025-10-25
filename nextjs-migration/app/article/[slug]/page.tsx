@@ -1,25 +1,23 @@
+import { articleService } from '@/lib/services/articles';
+import { commentService } from '@/lib/services/comments';
+import ArticleContent from '@/app/_components/Article/ArticleContent';
+import { notFound } from 'next/navigation';
+import type { Article, Comment } from '@/types';
+
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
 
-  return (
-    <div className="article-page">
-      <div className="banner">
-        <div className="container">
-          <h1>Article: {slug}</h1>
-        </div>
-      </div>
-
-      <div className="container page">
-        <div className="row article-content">
-          <div className="col-md-12">
-            <p>Article content will be implemented here.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  try {
+    const article: Article = await articleService.getArticle(slug);
+    const comments: Comment[] = await commentService.getComments(slug);
+    
+    return <ArticleContent article={article} initialComments={comments} />;
+  } catch (error) {
+    console.error('Error loading article:', error);
+    notFound();
+  }
 }
