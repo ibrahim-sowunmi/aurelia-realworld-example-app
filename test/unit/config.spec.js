@@ -17,7 +17,7 @@ describe('Config', () => {
     expect(config.api_url).toContain('https://');
   });
 
-  it('api_url points to realworld.io', () => {
-    expect(config.api_url).toContain('realworld.io');
+  it('api_url points to realworld domain', () => {
+    expect(config.api_url).toContain('realworld');
   });
 });

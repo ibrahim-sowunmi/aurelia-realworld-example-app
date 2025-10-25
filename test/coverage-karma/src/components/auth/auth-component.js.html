@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/shared/services/user-service.js</title>
+    <title>Code coverage report for src/components/auth/auth-component.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../../index.html">all files</a> / <a href="index.html">src/shared/services/</a> user-service.js
+      <a href="../../../index.html">all files</a> / <a href="index.html">src/components/auth/</a> auth-component.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>20/20</span>
+        <span class='fraction'>14/14</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>7/7</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>9/9</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>20/20</span>
+        <span class='fraction'>13/13</span>
       </div>
     </div>
   </div>
@@ -92,16 +92,7 @@
 47
 48
 49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+50</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,109 +102,91 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {inject} from 'aurelia-dependency-injection';
-import {ApiService} from './api-service';
-import {JwtService} from './jwt-service';
-import {User} from '../models/user';
-import {SharedState} from '../state/shared-state';
+import {Router, activationStrategy} from 'aurelia-router';
+import {UserService} from '../../shared/services/user-service';
+import {SharedState} from '../../shared/state/shared-state';
 &nbsp;
-@inject(ApiService, JwtService, SharedState)
-export class UserService {
+@inject(UserService, SharedState, Router)
+export class AuthComponent {
+  type = '';
+  username = '';
+  email = '';
+  password = '';
+  errors = null;
 &nbsp;
-  constructor(apiService, jwtService, sharedState) {
-    this.apiService = apiService;
-    this.jwtService = jwtService;
+  constructor(userService, sharedState, router) {
+    this.userService = userService;
     this.sharedState = sharedState;
+    this.router = router;
   }
 &nbsp;
-  // Verify JWT in localstorage with server &amp; load user's info.
-  // This runs once on application startup.
-  populate() {
-    if (this.jwtService.getToken()) {
-      this.apiService.get('/user')
-        .then(data =&gt; this.setAuth(data.user));
-    } else {
-      // Remove any potential remnants of previous auth states
-      this.purgeAuth();
+  determineActivationStrategy() {
+    return activationStrategy.replace;
+  }
+&nbsp;
+  activate(params, routeConfig) {
+    this.type = routeConfig.name;
+  }
+&nbsp;
+  get canSave() {
+    if (this.type === 'login') {
+      return this.email !== '' &amp;&amp; this.password !== '';
     }
+    return this.username !== '' &amp;&amp; this.email !== '' &amp;&amp; this.password !== '';
   }
 &nbsp;
-  setAuth(user) {
-    // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
-    this.sharedState.currentUser = user;
-    this.sharedState.isAuthenticated = true;
-  }
+  submit() {
+    this.errors = null;
 &nbsp;
-  purgeAuth() {
-    // Remove JWT from localstorage
-    this.jwtService.destroyToken();
-    this.sharedState.currentUser = new User();
-    this.sharedState.isAuthenticated = false;
-  }
-&nbsp;
-  attemptAuth(type, credentials) {
-    const route = (type === 'login') ? '/login' : '';
-    return this.apiService.post('/users' + route, {user: credentials})
-      .then(data =&gt; {
-        this.setAuth(data.user);
-        return data;
-      });
-  }
-&nbsp;
-  update(user) {
-    return this.apiService.put('/user', { user })
-      .then(data =&gt; {
-        this.sharedState.currentUser = data.user;
-        return data.user;
+    const credentials = {
+      username: this.username,
+      email: this.email,
+      password: this.password
+    };
+    this.userService.attemptAuth(this.type, credentials)
+      .then(data =&gt; this.router.navigateToRoute('home'))
+      .catch(promise =&gt; {
+        promise.then(err =&gt; this.errors = err.errors);
       });
   }
 }
