@@ -1,7 +1,7 @@
 import {BindingEngine} from 'aurelia-framework';
 import {inject} from 'aurelia-dependency-injection';
 import {SharedState} from '../../shared/state/shared-state';
-import {ArticleService} from "../../shared/services/article-service"
+import {ArticleService} from '../../shared/services/article-service';
 import {TagService} from '../../shared/services/tag-service';
 
 @inject(SharedState, BindingEngine, ArticleService, TagService)
@@ -26,7 +26,7 @@ export class HomeComponent {
     this.subscription = this.bindingEngine.propertyObserver(this.sharedState, 'isAuthenticated')
       .subscribe((newValue, oldValue) => {
         //console.log('homeComponent isAuthenticated: ', newValue)
-      })
+      });
   }
 
   unbind() {
@@ -43,16 +43,15 @@ export class HomeComponent {
       limit: this.limit,
       offset: this.limit * (this.currentPage - 1)
     };
-    if (this.filterTag !== undefined)
-      params.tag = this.filterTag;
+    if (this.filterTag !== undefined)      {params.tag = this.filterTag;}
     this.articleService.getList(this.shownList, params)
       .then(response => {
         this.articles.splice(0);
-        this.articles.push(...response.articles)
+        this.articles.push(...response.articles);
 
         // Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
         this.totalPages = Array.from(new Array(Math.ceil(response.articlesCount / this.limit)), (val, index) => index + 1);
-      })
+      });
   }
 
   getTags() {
@@ -60,7 +59,7 @@ export class HomeComponent {
       .then(response => {
         this.tags.splice(0);
         this.tags.push(...response);
-      })
+      });
   }
 
   setListTo(type, tag) {
@@ -72,10 +71,8 @@ export class HomeComponent {
 
   getFeedLinkClass() {
     let clazz = '';
-    if (!this.sharedState.isAuthenticated)
-      clazz += ' disabled';
-    if (this.shownList === 'feed')
-      clazz += ' active';
+    if (!this.sharedState.isAuthenticated)      {clazz += ' disabled';}
+    if (this.shownList === 'feed')      {clazz += ' active';}
     return clazz;
   }
 

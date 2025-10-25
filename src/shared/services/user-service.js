@@ -18,7 +18,7 @@ export class UserService {
   populate() {
     if (this.jwtService.getToken()) {
       this.apiService.get('/user')
-        .then(data => this.setAuth(data.user))
+        .then(data => this.setAuth(data.user));
     } else {
       // Remove any potential remnants of previous auth states
       this.purgeAuth();
@@ -54,6 +54,5 @@ export class UserService {
         this.sharedState.currentUser = data.user;
         return data.user;
       });
-
   }
 }

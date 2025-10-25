@@ -2,8 +2,8 @@ import {PLATFORM} from 'aurelia-pal';
 import {inject} from 'aurelia-dependency-injection';
 import {computedFrom} from 'aurelia-framework';
 import {SharedState} from '../../shared/state/shared-state';
-import {UserService} from "../../shared/services/user-service";
-import {ProfileService} from "../../shared/services/profile-service";
+import {UserService} from '../../shared/services/user-service';
+import {ProfileService} from '../../shared/services/profile-service';
 
 @inject(SharedState, ProfileService)
 export class ProfileComponent {
@@ -25,7 +25,7 @@ export class ProfileComponent {
   activate(params, routeConfig) {
     this.username = params.name;
     return this.profileService.get(this.username)
-      .then(profile => this.profile = profile)
+      .then(profile => this.profile = profile);
   }
 
   @computedFrom('sharedState.currentUser.username')
@@ -39,9 +39,6 @@ export class ProfileComponent {
       return;
     }
     this.profile.following = !this.profile.following;
-    if (this.profile.following)
-      this.profileService.follow(this.profile.username);
-    else
-      this.profileService.unfollow(this.profile.username);
+    if (this.profile.following)      {this.profileService.follow(this.profile.username);}    else      {this.profileService.unfollow(this.profile.username);}
   }
 }

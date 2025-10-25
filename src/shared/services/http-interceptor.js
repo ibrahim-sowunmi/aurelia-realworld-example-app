@@ -26,9 +26,9 @@ export class HttpInterceptor {
     }
 
     return request;
-  };
+  }
 
   response(response) {
     return response;
-  };
+  }
 }

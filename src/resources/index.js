@@ -5,6 +5,6 @@ export function configure(config) {
     PLATFORM.moduleName('./value-converters/date'),
     PLATFORM.moduleName('./value-converters/format-html'),
     PLATFORM.moduleName('./value-converters/markdown-html'),
-    PLATFORM.moduleName('./value-converters/keys'),
+    PLATFORM.moduleName('./value-converters/keys')
   ]);
 }

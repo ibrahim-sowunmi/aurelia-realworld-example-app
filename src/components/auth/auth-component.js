@@ -28,9 +28,8 @@ export class AuthComponent {
   get canSave() {
     if (this.type === 'login') {
       return this.email !== '' && this.password !== '';
-    } else {
-      return this.username !== '' && this.email !== '' && this.password !== '';
     }
+    return this.username !== '' && this.email !== '' && this.password !== '';
   }
 
   submit() {
@@ -44,7 +43,7 @@ export class AuthComponent {
     this.userService.attemptAuth(this.type, credentials)
       .then(data => this.router.navigateToRoute('home'))
       .catch(promise => {
-        promise.then(err => this.errors = err.errors)
+        promise.then(err => this.errors = err.errors);
       });
   }
 }

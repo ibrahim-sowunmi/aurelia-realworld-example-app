@@ -10,14 +10,14 @@ export class ProfileService {
 
   get(username) {
     return this.apiService.get('/profiles/' + username)
-      .then(data => data.profile)
+      .then(data => data.profile);
   }
 
   follow(username) {
-    return this.apiService.post('/profiles/' + username + '/follow')
+    return this.apiService.post('/profiles/' + username + '/follow');
   }
 
   unfollow(username) {
-    return this.apiService.delete('/profiles/' + username + '/follow')
+    return this.apiService.delete('/profiles/' + username + '/follow');
   }
 }

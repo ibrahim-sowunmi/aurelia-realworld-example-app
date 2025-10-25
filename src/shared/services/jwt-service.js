@@ -1,13 +1,13 @@
 export class JwtService {
-  
+
   getToken() {
-    return window.localStorage['jwtToken'];
+    return window.localStorage.jwtToken;
   }
-  
+
   saveToken(token) {
-    window.localStorage['jwtToken'] = token;
+    window.localStorage.jwtToken = token;
   }
-  
+
   destroyToken() {
     window.localStorage.removeItem('jwtToken');
   }
@@ -17,8 +17,7 @@ export class JwtService {
   }
 
   getAuthorizationHeader() {
-    if (this.isTokenValid())
-      return `Token ${this.getToken()}`;
-  };
-  
+    if (this.isTokenValid())      {return `Token ${this.getToken()}`;}
+  }
+
 }

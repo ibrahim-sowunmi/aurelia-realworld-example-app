@@ -1,7 +1,7 @@
 import {inject, computedFrom, bindable} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {ArticleService} from "../../shared/services/article-service";
-import {SharedState} from "../../shared/state/shared-state";
+import {ArticleService} from '../../shared/services/article-service';
+import {SharedState} from '../../shared/state/shared-state';
 
 @inject(ArticleService, SharedState, Router)
 export class ArticleMeta {

@@ -10,15 +10,15 @@ export class CommentService {
 
   add(slug, payload) {
     return this.apiService.post(`/articles/${slug}/comments`, {comment: {body: payload}})
-      .then(data => data.comment)
+      .then(data => data.comment);
   }
 
   getList(slug) {
     return this.apiService.get(`/articles/${slug}/comments`)
-      .then(data => data.comments)
+      .then(data => data.comments);
   }
 
   destroy(commentId, articleSlug) {
-    return this.apiService.delete(`/articles/${articleSlug}/comments/${commentId}`)
+    return this.apiService.delete(`/articles/${articleSlug}/comments/${commentId}`);
   }
 }

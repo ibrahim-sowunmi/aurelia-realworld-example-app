@@ -2,8 +2,8 @@ import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import 'babel-polyfill';
 //import * as Bluebird from 'bluebird';
-import {HttpClient} from "aurelia-fetch-client";
-import {HttpInterceptor} from "./shared/services/http-interceptor";
+import {HttpClient} from 'aurelia-fetch-client';
+import {HttpInterceptor} from './shared/services/http-interceptor';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 //Bluebird.config({ warnings: { wForgottenReturn: false } });

@@ -1,5 +1,5 @@
 export class User {
-  
+
   constructor() {
     this.email = '';
     this.token = '';
@@ -7,5 +7,5 @@ export class User {
     this.bio = '';
     this.image = '';
   }
-  
+
 }

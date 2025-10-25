@@ -1,4 +1,4 @@
-import format from 'date-fns/format'
+import format from 'date-fns/format';
 
 export class DateValueConverter {
   /*
@@ -10,7 +10,7 @@ export class DateValueConverter {
     return format(
       value,
       'MMMM D, YYYY'
-    )
+    );
   }
 }
 

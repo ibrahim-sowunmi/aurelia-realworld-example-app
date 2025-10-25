@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-dependency-injection';
-import {ArticleService} from "../../shared/services/article-service";
-import {CommentService} from "../../shared/services/comment-service";
-import {SharedState} from "../../shared/state/shared-state";
+import {ArticleService} from '../../shared/services/article-service';
+import {CommentService} from '../../shared/services/comment-service';
+import {SharedState} from '../../shared/state/shared-state';
 
 @inject(ArticleService, CommentService, SharedState)
 export class ArticleComponent {
@@ -31,7 +31,7 @@ export class ArticleComponent {
       .then(comment => {
         this.comments.push(comment);
         this.myComment = '';
-      })
+      });
   }
 
   deleteComment(commentId) {
@@ -39,7 +39,7 @@ export class ArticleComponent {
       .then(() => {
         this.commentService.getList(this.slug)
           .then(comments => this.comments = comments);
-      })
+      });
   }
 
 }

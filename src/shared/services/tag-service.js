@@ -10,6 +10,6 @@ export class TagService {
 
   getList() {
     return this.apiService.get('/tags')
-      .then(data => data.tags)
+      .then(data => data.tags);
   }
 }

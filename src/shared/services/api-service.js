@@ -26,9 +26,9 @@ export class ApiService {
       method: 'GET',
       headers: this.setHeaders()
     };
-    return this.http.fetch(`${config.api_url}${path}?${qs.stringify(params)}`,options)
+    return this.http.fetch(`${config.api_url}${path}?${qs.stringify(params)}`, options)
       .then(status)
-      .catch(parseError)
+      .catch(parseError);
   }
 
   put(path, body = {}) {
@@ -37,9 +37,9 @@ export class ApiService {
       headers: this.setHeaders(),
       body: json(body)
     };
-    return this.http.fetch(`${config.api_url}${path}`,options)
+    return this.http.fetch(`${config.api_url}${path}`, options)
       .then(status)
-      .catch(parseError)
+      .catch(parseError);
   }
 
   post(path, body = {}) {
@@ -48,9 +48,9 @@ export class ApiService {
       headers: this.setHeaders(),
       body: json(body)
     };
-    return this.http.fetch(`${config.api_url}${path}`,options)
+    return this.http.fetch(`${config.api_url}${path}`, options)
       .then(status)
-      .catch(parseError)
+      .catch(parseError);
   }
 
   delete(path) {
@@ -58,8 +58,8 @@ export class ApiService {
       method: 'DELETE',
       headers: this.setHeaders()
     };
-    return this.http.fetch(`${config.api_url}${path}`,options)
+    return this.http.fetch(`${config.api_url}${path}`, options)
       .then(status)
-      .catch(parseError)
+      .catch(parseError);
   }
 }
