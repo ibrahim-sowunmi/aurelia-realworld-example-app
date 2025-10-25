@@ -134,7 +134,12 @@ export default function EditorPage() {
                   <div className="tag-list">
                     {tagList.map((tag) => (
                       <span className="tag-default tag-pill" key={tag}>
-                        <i className="ion-close-round" onClick={() => handleRemoveTag(tag)} />
+                        <i 
+                          className="ion-close-round" 
+                          onClick={() => handleRemoveTag(tag)}
+                          role="img" 
+                          aria-label="Remove tag" 
+                        />
                         {tag}
                       </span>
                     ))}
