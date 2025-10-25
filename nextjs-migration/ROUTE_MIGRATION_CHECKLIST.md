@@ -9,11 +9,11 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (articles, tags)
 - [x] Template and lifecycle ports
 - [x] Tests added for ArticleList component
-- [x] Initial smoke test in dev
+- [x] Smoke test in dev
 - [ ] Final feature parity verification
   - [x] UI parity (layout, components)
   - [x] Data parity (articles list, tags)
-  - [ ] Edge cases (empty state, loading state)
+  - [x] Edge cases (empty state, loading state)
   - [ ] Accessibility (keyboard, screen reader)
 
 ### Login Page (/login)
@@ -21,7 +21,7 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (user auth)
 - [x] Template and lifecycle ports
 - [x] Tests added (4 test cases, 100% statement coverage)
-- [ ] Smoke test in dev
+- [x] Smoke test in dev
 - [x] Feature parity verification
   - [x] UI parity (Next.js Link, form layout)
   - [x] Data parity (form submission, canSave validation)
@@ -33,7 +33,7 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (user registration)
 - [x] Template and lifecycle ports
 - [x] Tests added (4 test cases, 100% statement coverage)
-- [ ] Smoke test in dev
+- [x] Smoke test in dev
 - [x] Feature parity verification
   - [x] UI parity (Next.js Link, form layout)
   - [x] Data parity (form submission, canSave validation)
@@ -45,7 +45,7 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (user settings)
 - [x] Template and lifecycle ports
 - [x] Tests added (4/6 tests passing)
-- [ ] Smoke test in dev
+- [x] Smoke test in dev
 - [ ] Feature parity verification
   - [x] UI parity
   - [x] Data parity (form fields, update)
@@ -57,7 +57,7 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (article creation/editing)
 - [x] Template and lifecycle ports
 - [x] Tests added (8 test cases covering core functionality)
-- [ ] Smoke test in dev
+- [x] Smoke test in dev
 - [ ] Feature parity verification
   - [x] UI parity
   - [x] Data parity (form submission, tags)
@@ -69,7 +69,7 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (article, comments)
 - [x] Template and lifecycle ports
 - [x] Tests added (2 server component tests, 5 client component tests)
-- [ ] Smoke test in dev
+- [x] Smoke test in dev
 - [ ] Feature parity verification
   - [x] UI parity
   - [x] Data parity (article content, comments)
@@ -81,11 +81,11 @@ This document tracks the migration progress of each route from Aurelia to Next.j
 - [x] Services migrated (profile, articles)
 - [x] Template and lifecycle ports
 - [x] Tests added (ProfileBanner tests with 4 test cases)
-- [ ] Smoke test in dev
+- [x] Smoke test in dev
 - [ ] Feature parity verification
   - [x] UI parity
-  - [ ] Data parity (profile info, articles)
-  - [ ] Edge cases (following, unfollowing)
+  - [x] Data parity (profile info, articles)
+  - [x] Edge cases (following, unfollowing, 404)
   - [ ] Accessibility
 
 ## Global Features
