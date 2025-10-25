@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/lib/state/AuthContext';
 import { articleService } from '@/lib/services/articles';
 
 export default function EditorPage() {
