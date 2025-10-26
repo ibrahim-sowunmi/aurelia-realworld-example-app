@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import ProtectedRoute from "../../../components/ProtectedRoute";
 import { articleService } from "../../../lib/services/articles";
-import type { Article } from "../../../types";
+import type { Article, CreateArticleData } from "../../../types";
 
 export default function EditorPage() {
   const router = useRouter();
@@ -80,7 +80,7 @@ export default function EditorPage() {
 
       const article = slug 
         ? await articleService.updateArticle(slug, articleData)
-        : await articleService.createArticle(articleData);
+        : await articleService.createArticle(articleData as CreateArticleData);
       router.push(`/article/${article.slug}`);
     } catch (error: any) {
       console.error("Error publishing article:", error);
