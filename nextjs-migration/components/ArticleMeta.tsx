@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Article } from '@/types';
-import { deleteArticle, favoriteArticle, unfavoriteArticle } from '@/lib/services/articles';
-import { followProfile, unfollowProfile } from '@/lib/services/profiles';
+import { articleService } from '@/lib/services/articles';
+import { profileService } from '@/lib/services/profiles';
 
 interface ArticleMetaProps {
   article: Article;
@@ -26,11 +26,11 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
 
     try {
       if (article.author.following) {
-        await unfollowProfile(article.author.username);
-        article.author.following = false;
+        const updatedProfile = await profileService.unfollowProfile(article.author.username);
+        article.author.following = updatedProfile.following;
       } else {
-        await followProfile(article.author.username);
-        article.author.following = true;
+        const updatedProfile = await profileService.followProfile(article.author.username);
+        article.author.following = updatedProfile.following;
       }
       router.refresh();
     } catch (error) {
@@ -46,13 +46,13 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
 
     try {
       if (article.favorited) {
-        const response = await unfavoriteArticle(article.slug);
-        article.favorited = response.article.favorited;
-        article.favoritesCount = response.article.favoritesCount;
+        const updatedArticle = await articleService.unfavoriteArticle(article.slug);
+        article.favorited = updatedArticle.favorited;
+        article.favoritesCount = updatedArticle.favoritesCount;
       } else {
-        const response = await favoriteArticle(article.slug);
-        article.favorited = response.article.favorited;
-        article.favoritesCount = response.article.favoritesCount;
+        const updatedArticle = await articleService.favoriteArticle(article.slug);
+        article.favorited = updatedArticle.favorited;
+        article.favoritesCount = updatedArticle.favoritesCount;
       }
       router.refresh();
     } catch (error) {
@@ -66,7 +66,7 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     }
 
     try {
-      await deleteArticle(article.slug);
+      await articleService.deleteArticle(article.slug);
       router.push('/');
     } catch (error) {
       console.error('Error deleting article:', error);

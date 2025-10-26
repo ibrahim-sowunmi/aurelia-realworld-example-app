@@ -4,10 +4,60 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import ArticleList from '@/components/ArticleList';
-import { getProfile, followProfile, unfollowProfile } from '@/lib/services/profiles';
-import { getList as getArticlesList } from '@/lib/services/articles';
-import { Profile } from '@/types';
+import { ArticleList } from '@/components/ArticleList';
+import { profileService } from '@/lib/services/profiles';
+import { articleService } from '@/lib/services/articles';
+import { Profile, Article } from '@/types';
+
+function ArticleListContainer({ filterParams }: { filterParams: { author?: string; favorited?: string } }) {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const limit = 10;
+  
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setIsLoading(true);
+      try {
+        const params = {
+          limit,
+          offset: limit * (currentPage - 1),
+          ...filterParams
+        };
+        
+        const response = await articleService.getList('all', params);
+        setArticles(response.articles);
+        
+        const pageCount = Math.ceil(response.articlesCount / limit);
+        setTotalPages(Array.from({ length: pageCount }, (_, i) => i + 1));
+      } catch (error) {
+        console.error('Error fetching articles', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchArticles();
+  }, [filterParams, currentPage]);
+  
+  const setPage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  
+  if (isLoading && currentPage === 1) {
+    return <div className="article-preview">Loading articles...</div>;
+  }
+  
+  return (
+    <ArticleList
+      articles={articles}
+      totalPages={totalPages}
+      currentPage={currentPage}
+      setPage={setPage}
+    />
+  );
+}
 
 export default function ProfilePage() {
   const params = useParams();
@@ -28,8 +78,8 @@ export default function ProfilePage() {
       
       setIsLoading(true);
       try {
-        const profileResponse = await getProfile(username);
-        setProfile(profileResponse.profile);
+        const profileResponse = await profileService.getProfile(username);
+        setProfile(profileResponse);
       } catch (err) {
         console.error('Error fetching profile:', err);
         setError('Failed to load profile');
@@ -54,11 +104,11 @@ export default function ProfilePage() {
     
     try {
       if (profile.following) {
-        await unfollowProfile(profile.username);
-        setProfile({ ...profile, following: false });
+        const updatedProfile = await profileService.unfollowProfile(profile.username);
+        setProfile({ ...profile, following: updatedProfile.following });
       } else {
-        await followProfile(profile.username);
-        setProfile({ ...profile, following: true });
+        const updatedProfile = await profileService.followProfile(profile.username);
+        setProfile({ ...profile, following: updatedProfile.following });
       }
     } catch (err) {
       console.error('Error toggling follow:', err);
@@ -155,13 +205,13 @@ export default function ProfilePage() {
             </div>
 
             {tab === 'articles' ? (
-              <ArticleList 
-                predicate={{ author: username }}
+              <ArticleListContainer 
+                filterParams={{ author: username }}
                 key={`articles-${username}`}
               />
             ) : (
-              <ArticleList 
-                predicate={{ favorited: username }}
+              <ArticleListContainer 
+                filterParams={{ favorited: username }}
                 key={`favorites-${username}`}
               />
             )}

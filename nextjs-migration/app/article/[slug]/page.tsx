@@ -6,8 +6,8 @@ import { marked } from 'marked';
 import { useAuth } from '@/contexts/AuthContext';
 import ArticleMeta from '@/components/ArticleMeta';
 import Comment from '@/components/Comment';
-import { getArticle } from '@/lib/services/articles';
-import { getComments, createComment, deleteComment } from '@/lib/services/comments';
+import { articleService } from '@/lib/services/articles';
+import { commentService } from '@/lib/services/comments';
 import { Article as ArticleType, Comment as CommentType } from '@/types';
 
 export default function ArticlePage() {
@@ -28,11 +28,11 @@ export default function ArticlePage() {
       
       setIsLoading(true);
       try {
-        const articleResponse = await getArticle(slug);
-        setArticle(articleResponse.article);
+        const articleData = await articleService.getArticle(slug);
+        setArticle(articleData);
         
-        const commentsResponse = await getComments(slug);
-        setComments(commentsResponse.comments);
+        const commentsData = await commentService.getComments(slug);
+        setComments(commentsData);
       } catch (err) {
         console.error('Error fetching article:', err);
         setError('Failed to load article');
@@ -50,8 +50,8 @@ export default function ArticlePage() {
     
     setIsSubmitting(true);
     try {
-      const response = await createComment(slug, { body: commentBody });
-      setComments(prevComments => [response.comment, ...prevComments]);
+      const newComment = await commentService.createComment(slug, { body: commentBody });
+      setComments(prevComments => [newComment, ...prevComments]);
       setCommentBody('');
     } catch (err) {
       console.error('Error posting comment:', err);
@@ -63,7 +63,7 @@ export default function ArticlePage() {
 
   const handleDeleteComment = async (commentId: number) => {
     try {
-      await deleteComment(slug, commentId);
+      await commentService.deleteComment(slug, commentId);
       setComments(prevComments => 
         prevComments.filter(comment => comment.id !== commentId)
       );
