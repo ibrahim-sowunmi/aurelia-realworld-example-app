@@ -1,103 +1,164 @@
-import Image from "next/image";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { articleService } from '@/lib/services/articles';
+import { tagService } from '@/lib/services/tags';
+import { Article } from '@/types';
+import { ArticleList } from '@/components/ArticleList';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { isAuthenticated } = useAuth();
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [shownList, setShownList] = useState<'all' | 'feed'>('all');
+  const [filterTag, setFilterTag] = useState<string | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const limit = 10;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    loadArticles();
+  }, [shownList, filterTag, currentPage]);
+
+  useEffect(() => {
+    loadTags();
+  }, []);
+
+  const loadArticles = async () => {
+    setIsLoading(true);
+    try {
+      const params = {
+        limit,
+        offset: limit * (currentPage - 1),
+        ...(filterTag && { tag: filterTag }),
+      };
+
+      const response = await articleService.getList(shownList, params);
+      setArticles(response.articles);
+      
+      const pages = Array.from(
+        { length: Math.ceil(response.articlesCount / limit) },
+        (_, i) => i + 1
+      );
+      setTotalPages(pages);
+    } catch (error) {
+      console.error('Failed to load articles:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadTags = async () => {
+    try {
+      const tagList = await tagService.getList();
+      setTags(tagList);
+    } catch (error) {
+      console.error('Failed to load tags:', error);
+    }
+  };
+
+  const handleSetListTo = (type: 'all' | 'feed', tag?: string) => {
+    if (type === 'feed' && !isAuthenticated) return;
+    setShownList(type);
+    setFilterTag(tag);
+    setCurrentPage(1);
+  };
+
+  const handleToggleFavorite = async (article: Article) => {
+    try {
+      if (article.favorited) {
+        await articleService.unfavoriteArticle(article.slug);
+      } else {
+        await articleService.favoriteArticle(article.slug);
+      }
+      await loadArticles();
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
+    }
+  };
+
+  return (
+    <div className="home-page">
+      <div className="banner">
+        <div className="container">
+          <h1 className="logo-font">conduit</h1>
+          <p>A place to share your knowledge.</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <div className="container page">
+        <div className="row">
+          <div className="col-md-9">
+            <div className="feed-toggle">
+              <ul className="nav nav-pills outline-active">
+                {isAuthenticated && (
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${shownList === 'feed' && !filterTag ? 'active' : ''}`}
+                      onClick={() => handleSetListTo('feed')}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      Your Feed
+                    </a>
+                  </li>
+                )}
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${shownList === 'all' && !filterTag ? 'active' : ''}`}
+                    onClick={() => handleSetListTo('all')}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Global Feed
+                  </a>
+                </li>
+                {filterTag && (
+                  <li className="nav-item">
+                    <a className="nav-link active">
+                      <i className="ion-pound"></i> {filterTag}
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            {isLoading ? (
+              <div className="article-preview">Loading articles...</div>
+            ) : (
+              <ArticleList
+                articles={articles}
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+                onToggleFavorite={handleToggleFavorite}
+              />
+            )}
+          </div>
+
+          <div className="col-md-3">
+            <div className="sidebar">
+              <p>Popular Tags</p>
+              <div className="tag-list">
+                {tags.length === 0 ? (
+                  <div>No tags are here... yet.</div>
+                ) : (
+                  tags.map((tag) => (
+                    <a
+                      key={tag}
+                      className="tag-pill tag-default"
+                      onClick={() => handleSetListTo('all', tag)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {tag}
+                    </a>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
