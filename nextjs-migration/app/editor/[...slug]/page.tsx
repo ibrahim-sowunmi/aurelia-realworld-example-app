@@ -21,7 +21,9 @@ export default function EditorPage() {
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   
-  const slug = params?.slug ? (Array.isArray(params.slug) ? params.slug[0] : params.slug) : undefined;
+  const slug = params?.slug && Array.isArray(params.slug) && params.slug.length > 0 
+    ? params.slug[0] 
+    : undefined;
   
   useEffect(() => {
     if (!isAuthenticated) {
