@@ -1,5 +1,50 @@
 # Aurelia to Next.js Migration Notes
 
+## Styling Analysis
+
+### Aurelia Styling Approach
+- No local CSS files; external resources imported in dist/index.html:
+  - Ionicons: `//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css`
+  - Google Fonts: `//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|...`
+  - Main RealWorld CSS: `//demo.productionready.io/main.css`
+
+### CSS Classes and Patterns
+- Bootstrap Grid System:
+  - container, row, col-md-*, offset-md-*
+  - text-xs-center, pull-xs-right
+
+- Bootstrap Components:
+  - navbar, navbar-light, nav-item, nav-link
+  - card, card-block, card-footer
+  - form-group, form-control, form-control-lg
+  - btn, btn-primary, btn-lg, btn-sm, btn-outline-*
+
+- Ionicons:
+  - ion-compose (new post)
+  - ion-gear-a (settings)
+  - ion-pound (hashtag)
+  - ion-close-round (close)
+
+- RealWorld-Specific Classes:
+  - banner (green header banner)
+  - logo-font (conduit title styling)
+  - tag-list, tag-pill, tag-default
+  - article-preview, article-meta
+  - feed-toggle, sidebar
+
+### Current Next.js Styling
+- globals.css with Tailwind import
+- Geist Sans and Mono fonts configured
+- Missing RealWorld Conduit styling and external imports
+- Visual styling significantly different from Aurelia app
+
+### Migration Requirements
+- Import external CSS resources in Next.js layout
+- Maintain same class names and structure in JSX components
+- Ensure Bootstrap grid and component classes are applied
+- Keep Ionicons for consistent icon display
+- Match the green banner and typography of RealWorld spec
+
 ## Settings Component Migration
 
 ### Aurelia Implementation
@@ -31,6 +76,7 @@
 - Form for creating/editing articles with title, description, body, and tags
 - Tag management with observable property and methods for adding/removing tags
 - `publishArticle()` method for saving articles
+- Uses Bootstrap classes: form-group, form-control, btn-primary
 
 ### Next.js Implementation
 - Client component with React hooks for state management
@@ -39,6 +85,7 @@
 - Uses articleService directly imported for fetching and saving articles
 - Tag management with separate state for tag input and article tags
 - Loading, saving, and error states for UI feedback
+- Maintains same Bootstrap classes for visual parity
 
 ### Key Conversions
 - `@inject(ArticleService, Router)` → Direct imports and hooks
