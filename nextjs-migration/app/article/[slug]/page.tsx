@@ -32,7 +32,7 @@ export default function ArticlePage() {
         const articleData = await articleService.getArticle(slug);
         setArticle(articleData);
         
-        const commentsData = await commentService.getList(slug);
+        const commentsData = await commentService.getComments(slug);
         setComments(commentsData);
       } catch (error: any) {
         console.error("Error loading article:", error);
@@ -53,7 +53,7 @@ export default function ArticlePage() {
     
     setIsSubmitting(true);
     try {
-      const comment = await commentService.add(slug, myComment);
+      const comment = await commentService.createComment(slug, { body: myComment });
       setComments(prev => [...prev, comment]);
       setMyComment(""); // Clear the comment input
     } catch (error: any) {
@@ -70,8 +70,8 @@ export default function ArticlePage() {
     if (!slug) return;
     
     try {
-      await commentService.destroy(commentId, slug);
-      const commentsData = await commentService.getList(slug);
+      await commentService.deleteComment(slug, commentId);
+      const commentsData = await commentService.getComments(slug);
       setComments(commentsData);
     } catch (error: any) {
       console.error("Error deleting comment:", error);
