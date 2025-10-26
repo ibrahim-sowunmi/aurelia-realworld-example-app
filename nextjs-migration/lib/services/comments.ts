@@ -17,7 +17,7 @@ export const commentService = {
     return response.comment;
   },
 
-  async deleteComment(slug: string, commentId: number): Promise<void> {
+  async deleteComment(commentId: string | number, slug: string): Promise<void> {
     await api.delete(`/articles/${slug}/comments/${commentId}`);
   },
 };
