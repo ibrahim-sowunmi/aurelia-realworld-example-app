@@ -1,15 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { articleService } from '@/lib/services/articles';
+import { tagService } from '@/lib/services/tags';
+import type { Article } from '@/types';
 
 export default function HomePage() {
-  const [articles, setArticles] = useState<any[]>([]);
+  const { isAuthenticated } = useAuth();
+  const [articles, setArticles] = useState<Article[]>([]);
   const [shownList, setShownList] = useState<'all' | 'feed'>('all');
   const [tags, setTags] = useState<string[]>([]);
   const [filterTag, setFilterTag] = useState<string | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number[]>([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const limit = 10;
 
   useEffect(() => {
@@ -22,19 +26,38 @@ export default function HomePage() {
   }, [currentPage, shownList, filterTag]);
 
   const getArticles = async () => {
-    const params: any = {
-      limit,
-      offset: limit * (currentPage - 1)
-    };
-    if (filterTag !== undefined) {
-      params.tag = filterTag;
+    try {
+      const params: any = {
+        limit,
+        offset: limit * (currentPage - 1)
+      };
+      if (filterTag !== undefined) {
+        params.tag = filterTag;
+      }
+      
+      const response = await articleService.getList(shownList, params);
+      setArticles(response.articles);
+      
+      const calculatedTotalPages = Array.from(
+        new Array(Math.ceil(response.articlesCount / limit)),
+        (val, index) => index + 1
+      );
+      setTotalPages(calculatedTotalPages);
+    } catch (error) {
+      console.error('Failed to fetch articles:', error);
+      setArticles([]);
+      setTotalPages([]);
     }
-    setArticles([]);
-    setTotalPages([]);
   };
 
   const getTags = async () => {
-    setTags([]);
+    try {
+      const fetchedTags = await tagService.getList();
+      setTags(fetchedTags);
+    } catch (error) {
+      console.error('Failed to fetch tags:', error);
+      setTags([]);
+    }
   };
 
   const setListTo = (type: 'feed' | 'all', tag?: string) => {
@@ -101,7 +124,7 @@ export default function HomePage() {
                   <div key={index} className="article-preview">
                     <div className="article-meta">
                       <a href={`/profile/${article.author?.username}`}>
-                        <img src={article.author?.image} alt={article.author?.username} />
+                        <img src={article.author?.image || undefined} alt={article.author?.username} />
                       </a>
                       <div className="info">
                         <a href={`/profile/${article.author?.username}`} className="author">
