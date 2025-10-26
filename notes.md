@@ -1,5 +1,84 @@
 # Aurelia to Next.js Migration Notes
 
+## Settings Component Migration
+
+### Aurelia Implementation
+- `SettingsComponent` with injected services (UserService, SharedState, Router)
+- Simple form with fields for profile image URL, name, bio, email, and password
+- Two methods: `update()` to save user settings and `logout()` to log out
+
+### Next.js Implementation
+- Client component with React hooks for state management
+- Form with controlled inputs for user profile data
+- Uses useAuth() hook to access user data and logout function
+- Uses userService directly imported for updating user data
+- Form data initialized from user context in useEffect
+- Error handling for API errors
+- Loading and saving states for UI feedback
+
+### Key Conversions
+- `@inject(UserService, SharedState, Router)` → Direct imports and hooks
+- `this.sharedState.currentUser` → user from useAuth() hook
+- `this.userService.update()` → userService.updateUser()
+- `this.userService.purgeAuth()` → logout() from useAuth() hook
+- `this.router.navigateToRoute('home')` → router.push('/')
+- Two-way bindings → Controlled form inputs with onChange handlers
+
+## Editor Component Migration
+
+### Aurelia Implementation
+- `EditorComponent` with injected services (ArticleService, Router)
+- Form for creating/editing articles with title, description, body, and tags
+- Tag management with observable property and methods for adding/removing tags
+- `publishArticle()` method for saving articles
+
+### Next.js Implementation
+- Client component with React hooks for state management
+- Form with controlled inputs for article data
+- Uses useParams() to get slug from URL for editing existing articles
+- Uses articleService directly imported for fetching and saving articles
+- Tag management with separate state for tag input and article tags
+- Loading, saving, and error states for UI feedback
+
+### Key Conversions
+- `@inject(ArticleService, Router)` → Direct imports and hooks
+- `activate(params)` → useEffect with useParams()
+- `@observable() tag` → useState for tagInput
+- `tagChanged()` → handleTagInputBlur() and handleTagInputKeyDown()
+- `addTag()/removeTag()` → Functions updating React state
+- `publishArticle()` → async function with proper error handling
+- Two-way bindings → Controlled form inputs
+
+## Article Component Migration
+
+### Aurelia Implementation
+- Main `ArticleComponent` with injected services (ArticleService, CommentService, SharedState)
+- Custom elements: `article-meta` and `comment`
+- Uses value converter for markdown rendering (`markdownHtml`)
+- Lifecycle hooks: `activate(params)` for fetching article and comments
+- Methods for posting and deleting comments
+
+### Next.js Implementation
+- Created client components:
+  - `article/[slug]/page.tsx` - Main article component
+  - `components/article/ArticleMeta.tsx` - Reusable meta component for article header/footer
+  - `components/article/Comment.tsx` - Comment component
+- Added markdown rendering utility with marked library
+- Replaced DI with direct imports and hooks
+- Replaced lifecycle hooks with useEffect and useParams
+- Converted HTML template to JSX with proper React patterns
+- Used dangerouslySetInnerHTML for markdown content (equivalent to Aurelia's innerhtml.bind)
+- State management with useState hooks for article, comments, loading states
+- Replaced two-way bindings with controlled components
+
+### Key Conversions
+- `@inject(ArticleService, CommentService, SharedState)` → Direct imports and hooks
+- `activate(params)` → useEffect with useParams
+- `innerhtml.bind` → dangerouslySetInnerHTML
+- Form bindings → Controlled form components
+- Template conditionals → React conditional rendering
+- Method calls → React event handlers
+
 ## Profile Component Migration
 
 ### Aurelia Implementation
