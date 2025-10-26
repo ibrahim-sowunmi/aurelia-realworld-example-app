@@ -6,7 +6,7 @@ import { articleService } from '@/lib/services/articles';
 import { useAuth } from '@/contexts/AuthContext';
 import type { Article } from '@/types';
 
-export default function EditorPage() {
+export function EditorPage() {
   const router = useRouter();
   const params = useParams();
   const { isAuthenticated } = useAuth();
