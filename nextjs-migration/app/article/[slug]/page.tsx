@@ -61,7 +61,7 @@ export default function ArticlePage() {
     
     setIsSubmitting(true);
     try {
-      const comment = await commentService.addComment(slug, { body: myComment });
+      const comment = await commentService.createComment(slug, { body: myComment });
       setComments([...comments, comment]);
       setMyComment('');
     } catch (error) {
@@ -73,7 +73,7 @@ export default function ArticlePage() {
   
   const handleCommentDelete = async (commentId: number) => {
     try {
-      await commentService.deleteComment(commentId, slug);
+      await commentService.deleteComment(slug, commentId);
       const updatedComments = await commentService.getComments(slug);
       setComments(updatedComments);
     } catch (error) {

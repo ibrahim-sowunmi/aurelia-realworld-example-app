@@ -11,7 +11,7 @@ interface CommentProps {
     createdAt: string;
     author: {
       username: string;
-      image: string;
+      image: string | null;
     };
   };
   onDelete: (commentId: number) => void;

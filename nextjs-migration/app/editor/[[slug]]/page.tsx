@@ -82,7 +82,12 @@ export default function EditorPage() {
     setErrors(null);
     
     try {
-      const savedArticle = await articleService.saveArticle(article, slug);
+      let savedArticle;
+      if (slug) {
+        savedArticle = await articleService.updateArticle(slug, article);
+      } else {
+        savedArticle = await articleService.createArticle(article);
+      }
       router.push(`/article/${savedArticle.slug}`);
     } catch (error: any) {
       if (error.errors) {

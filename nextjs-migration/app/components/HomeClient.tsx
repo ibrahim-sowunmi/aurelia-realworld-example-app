@@ -29,7 +29,7 @@ export default function HomeClient() {
           tag: filterTag,
         };
         
-        const response = await articleService.getArticles(
+        const response = await articleService.getList(
           shownList === 'feed' ? 'feed' : undefined,
           params
         );
@@ -54,7 +54,7 @@ export default function HomeClient() {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const fetchedTags = await tagService.getTags();
+        const fetchedTags = await tagService.getList();
         setTags(fetchedTags);
       } catch (error) {
         console.error('Error fetching tags:', error);
