@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./main.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import Navbar from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
   title: "Conduit",
@@ -29,6 +30,7 @@ export default function RootLayout({
       </head>
       <body>
         <AuthProvider>
+          <Navbar />
           {children}
         </AuthProvider>
       </body>
