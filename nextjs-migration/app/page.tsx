@@ -1,10 +1,11 @@
 'use client';
 
+import React from 'react';
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { articleService } from '@/lib/services/articles';
-import { tagService } from '@/lib/services/tags';
-import type { Article } from '@/types';
+import { useAuth } from '../contexts/AuthContext';
+import { articleService } from '../lib/services/articles';
+import { tagService } from '../lib/services/tags';
+import type { Article } from '../types';
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
