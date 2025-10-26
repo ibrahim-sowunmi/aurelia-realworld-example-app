@@ -12,8 +12,11 @@ export default function ProfileLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { username: string };
+  params: { username: string } | Promise<{ username: string }>;
 }) {
+  if (params instanceof Promise) {
+    return <div className="profile-page">Loading profile...</div>;
+  }
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -142,7 +145,7 @@ export default function ProfileLayout({
                 <li className="nav-item">
                   <Link 
                     href={`/${profile.username}`}
-                    className={`nav-link ${!router.pathname?.includes('favorites') ? 'active' : ''}`}
+                    className="nav-link active"
                   >
                     My Posts
                   </Link>
@@ -150,7 +153,7 @@ export default function ProfileLayout({
                 <li className="nav-item">
                   <Link 
                     href={`/${profile.username}/favorites`}
-                    className={`nav-link ${router.pathname?.includes('favorites') ? 'active' : ''}`}
+                    className="nav-link"
                   >
                     Favorited Posts
                   </Link>

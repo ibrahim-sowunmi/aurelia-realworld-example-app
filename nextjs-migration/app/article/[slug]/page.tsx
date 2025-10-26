@@ -28,11 +28,11 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     
     const fetchData = async () => {
       try {
-        const articleResponse = await articleService.get(params.slug);
-        setArticle(articleResponse.article);
+        const articleData = await articleService.getArticle(params.slug);
+        setArticle(articleData);
         
-        const commentsResponse = await commentService.getAll(params.slug);
-        setComments(commentsResponse.comments);
+        const commentsData = await commentService.getComments(params.slug);
+        setComments(commentsData);
       } catch (err) {
         console.error('Failed to fetch article data', err);
         setError('Failed to load article. Please try again later.');
@@ -54,8 +54,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     
     setIsSubmitting(true);
     try {
-      const response = await commentService.create(params.slug, { body: commentText });
-      setComments(prevComments => [response.comment, ...prevComments]);
+      const newComment = await commentService.createComment(params.slug, { body: commentText });
+      setComments(prevComments => [newComment, ...prevComments]);
       setCommentText('');
     } catch (err) {
       console.error('Failed to post comment', err);
@@ -67,7 +67,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   
   const handleDeleteComment = async (commentId: number) => {
     try {
-      await commentService.destroy(params.slug, commentId);
+      await commentService.deleteComment(params.slug, commentId);
       setComments(prevComments => 
         prevComments.filter(comment => comment.id !== commentId)
       );

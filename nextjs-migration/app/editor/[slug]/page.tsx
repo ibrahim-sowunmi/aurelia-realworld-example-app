@@ -6,10 +6,9 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { articleService } from '../../../lib/services/articles';
 import type { CreateArticleData } from '../../../types';
 
-export default function EditorPage({ params }: { params?: { slug?: string } }) {
+export default function EditArticlePage({ params }: { params: { slug: string } }) {
   const { user } = useAuth();
   const router = useRouter();
-  const isEditing = !!params?.slug;
   const tagInputRef = useRef<HTMLInputElement>(null);
   
   const [loading, setLoading] = useState(false);
@@ -25,18 +24,18 @@ export default function EditorPage({ params }: { params?: { slug?: string } }) {
   const [tagInput, setTagInput] = useState('');
   
   useEffect(() => {
-    if (isEditing && params?.slug) {
+    if (params.slug) {
       setLoading(true);
-      articleService.get(params.slug)
-        .then(data => {
+      articleService.getArticle(params.slug)
+        .then((data) => {
           setArticle({
-            title: data.article.title,
-            description: data.article.description,
-            body: data.article.body,
-            tagList: data.article.tagList
+            title: data.title,
+            description: data.description,
+            body: data.body,
+            tagList: data.tagList
           });
         })
-        .catch(error => {
+        .catch((error: any) => {
           console.error('Failed to load article', error);
           setErrors(error.errors || { 'error': ['Failed to load article'] });
         })
@@ -44,7 +43,7 @@ export default function EditorPage({ params }: { params?: { slug?: string } }) {
           setLoading(false);
         });
     }
-  }, [isEditing, params?.slug]);
+  }, [params.slug]);
   
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -100,15 +99,8 @@ export default function EditorPage({ params }: { params?: { slug?: string } }) {
     setLoading(true);
     
     try {
-      let response;
-      
-      if (isEditing && params?.slug) {
-        response = await articleService.update(params.slug, article);
-      } else {
-        response = await articleService.create(article);
-      }
-      
-      router.push(`/article/${response.article.slug}`);
+      const response = await articleService.updateArticle(params.slug, article);
+      router.push(`/article/${response.slug}`);
     } catch (error: any) {
       console.error('Failed to save article', error);
       setErrors(error.errors || { 'error': ['Failed to save article'] });
@@ -125,7 +117,7 @@ export default function EditorPage({ params }: { params?: { slug?: string } }) {
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            <h1 className="text-xs-center">{isEditing ? 'Edit Article' : 'New Article'}</h1>
+            <h1 className="text-xs-center">Edit Article</h1>
             
             {errors && (
               <ul className="error-messages">
