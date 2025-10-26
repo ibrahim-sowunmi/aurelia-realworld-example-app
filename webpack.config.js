@@ -44,7 +44,7 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
     contentBase: outDir,
     // serve index.html for all 404 (required for push-state)
     historyApiFallback: true,
-    port: 3000
+    port: 8080
   },
   devtool: production ? 'nosources-source-map' : 'cheap-module-eval-source-map',
   module: {

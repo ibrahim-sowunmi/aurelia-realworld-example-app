@@ -9,16 +9,17 @@ module.exports = {
       default: 'nps test.karma',
       karma: {
         default: series(
+          'source ~/.nvm/nvm.sh && nvm use',
           rimraf('test/coverage-karma'),
           'karma start test/karma.conf.js'
         ),
-        watch: 'karma start test/karma.conf.js --auto-watch --no-single-run',
-        debug: 'karma start test/karma.conf.js --auto-watch --no-single-run --debug'
+        watch: 'source ~/.nvm/nvm.sh && nvm use && karma start test/karma.conf.js --auto-watch --no-single-run',
+        debug: 'source ~/.nvm/nvm.sh && nvm use && karma start test/karma.conf.js --auto-watch --no-single-run --debug'
       },
 
       lint: {
-        default: 'eslint src',
-        fix: 'eslint --fix'
+        default: 'source ~/.nvm/nvm.sh && nvm use && eslint src',
+        fix: 'source ~/.nvm/nvm.sh && nvm use && eslint --fix'
       },
       all: concurrent({
         browser: series.nps('test.karma'),
