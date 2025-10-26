@@ -24,7 +24,7 @@ export default function EditorPage() {
     async function loadArticle() {
       if (slug) {
         try {
-          const article = await articleService.get(slug);
+          const article = await articleService.getArticle(slug);
           setTitle(article.title || "");
           setDescription(article.description || "");
           setBody(article.body || "");
@@ -78,7 +78,9 @@ export default function EditorPage() {
         tagList
       };
 
-      const article = await articleService.save(articleData, slug);
+      const article = slug 
+        ? await articleService.updateArticle(slug, articleData)
+        : await articleService.createArticle(articleData);
       router.push(`/article/${article.slug}`);
     } catch (error: any) {
       console.error("Error publishing article:", error);
