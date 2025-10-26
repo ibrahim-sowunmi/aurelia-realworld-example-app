@@ -98,7 +98,7 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
       {canModify ? (
         <span>
           <Link 
-            href={`/editor/${article.slug}`}
+            href={`/editor/edit/${article.slug}`}
             className="btn btn-outline-secondary btn-sm"
           >
             <i className="ion-edit"></i>&nbsp;Edit Article
