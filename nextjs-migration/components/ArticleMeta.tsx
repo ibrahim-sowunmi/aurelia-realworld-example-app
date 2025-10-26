@@ -24,7 +24,7 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     
     setIsSubmitting(true);
     try {
-      await articleService.destroy(article.slug);
+      await articleService.deleteArticle(article.slug);
       router.push("/");
     } catch (error) {
       console.error("Error deleting article:", error);
@@ -41,12 +41,12 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     setIsSubmitting(true);
     try {
       if (article.author.following) {
-        await profileService.unfollow(article.author.username);
+        await profileService.unfollowProfile(article.author.username);
       } else {
-        await profileService.follow(article.author.username);
+        await profileService.followProfile(article.author.username);
       }
       
-      const updatedArticle = await articleService.get(article.slug);
+      const updatedArticle = await articleService.getArticle(article.slug);
       article.author.following = updatedArticle.author.following;
       
       setIsSubmitting(false);
@@ -65,12 +65,12 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     setIsSubmitting(true);
     try {
       if (article.favorited) {
-        await articleService.unfavorite(article.slug);
+        await articleService.unfavoriteArticle(article.slug);
       } else {
-        await articleService.favorite(article.slug);
+        await articleService.favoriteArticle(article.slug);
       }
       
-      const updatedArticle = await articleService.get(article.slug);
+      const updatedArticle = await articleService.getArticle(article.slug);
       article.favorited = updatedArticle.favorited;
       article.favoritesCount = updatedArticle.favoritesCount;
       

@@ -29,7 +29,7 @@ export default function ArticlePage() {
       
       setIsLoading(true);
       try {
-        const articleData = await articleService.get(slug);
+        const articleData = await articleService.getArticle(slug);
         setArticle(articleData);
         
         const commentsData = await commentService.getList(slug);
