@@ -1,5 +1,36 @@
 # Aurelia to Next.js Migration Notes
 
+## Profile Component Migration
+
+### Aurelia Implementation
+- Three separate components:
+  - `ProfileComponent` - Main profile with user info and tabs
+  - `ProfileArticleComponent` - User's own articles
+  - `ProfileFavoritesComponent` - User's favorited articles
+- Uses nested routing with child routes for articles/favorites
+- Uses dependency injection for ProfileService
+- Has computed property `isUser` to check if viewing own profile
+- Has method to toggle following status
+
+### Next.js Implementation
+- Created three client components:
+  - `[username]/page.tsx` - Main profile component
+  - `[username]/articles/page.tsx` - User's articles (nested route)
+  - `[username]/favorites/page.tsx` - Favorited articles (nested route)
+- Uses App Router for nested routes 
+- Uses React hooks to fetch and manage profile data
+- Replaces computed property with derived state
+- Replaces DI with direct service imports and hooks
+- Uses the shared ArticleList component
+
+### Key Conversions
+- `@inject(SharedState, ProfileService)` → Direct imports and useAuth() hook
+- `activate(params)` → useEffect() with useParams()
+- `@computedFrom()` → Simple derived value
+- Aurelia binding (`if.bind`, etc.) → React conditional rendering
+- Router configuration → App Router file-based routing
+- Event handlers → React event handlers
+
 ## Authentication Protection
 
 ### Aurelia Implementation
