@@ -147,7 +147,7 @@ export default function ArticlePage() {
                   />
                 </div>
                 <div className="card-footer">
-                  <img src={user?.image} className="comment-author-img" alt="" />
+                  <img src={user?.image || "/placeholder.jpg"} className="comment-author-img" alt="" />
                   <button 
                     className="btn btn-sm btn-primary"
                     type="submit"
