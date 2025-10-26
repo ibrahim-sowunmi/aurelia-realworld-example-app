@@ -54,3 +54,65 @@
 8. Convert template syntax to JSX
 9. Handle errors with useState
 10. Use the existing userService from lib/services/user.ts
+
+## Home Component Analysis
+
+### Location
+- Aurelia: `src/components/home/home-component.js` + `src/components/home/home-component.html`
+- Next.js Target: `nextjs-migration/app/page.tsx`
+
+### Injected Services
+- `SharedState` - for checking authentication status
+- `BindingEngine` - for observing property changes
+- `ArticleService` - for fetching articles
+- `TagService` - for fetching tags
+
+### Component State
+- `articles` - array of articles to display
+- `shownList` - current feed view ('all' or 'feed')
+- `tags` - array of popular tags
+- `filterTag` - optional tag to filter articles by
+- `pageNumber`, `totalPages`, `currentPage`, `limit` - pagination state
+
+### Lifecycle Hooks
+- `bind()` - sets up a subscription to `sharedState.isAuthenticated`
+- `unbind()` - cleans up the subscription
+- `attached()` - calls `getArticles()` and `getTags()` to load initial data
+
+### Methods
+- `getArticles()` - fetches articles based on current filters and pagination
+- `getTags()` - fetches popular tags
+- `setListTo(type, tag)` - changes the feed view (all/feed) and tag filter
+- `getFeedLinkClass()` - returns CSS classes for the feed tab based on auth state
+- `setPageTo(pageNumber)` - changes pagination and reloads articles
+
+### Template Bindings
+- `if.bind="sharedState.isAuthenticated"` - conditional rendering of Your Feed tab
+- `class.bind="shownList === 'feed' && !filterTag ? ' active' : ''"` - dynamic class binding
+- `click.delegate="setListTo('feed')"` - event delegation
+- `if.bind="filterTag"` - conditional rendering of tag filter
+- `repeat.for="tag of tags"` - iteration for tag list
+- `articles.bind="articles"` - binding to custom element
+- `total-pages.bind="totalPages"` - binding to custom element
+- `set-page-cb.call="setPageTo(pageNumber)"` - callback binding to custom element
+- `${filterTag}` - string interpolation
+
+### Custom Elements
+- `<article-list>` - component to display article list with pagination
+
+### Conversion Plan for React
+1. Create a functional HomePage component 
+2. Use React hooks to replace DI:
+   - `useAuth()` for authentication state
+   - `useState()` for local state (articles, shownList, etc.)
+   - `useEffect()` for data fetching on mount
+3. Import services directly instead of injecting them
+4. Convert template to JSX:
+   - `if.bind` → conditional rendering with `&&` or ternary
+   - `repeat.for` → `map()`
+   - `click.delegate` → `onClick`
+   - `class.bind` → computed className or conditional classes
+5. Create a separate ArticleList component
+6. Handle data fetching with useEffect or React Query
+7. Convert property binding to props passing
+8. Add proper TypeScript types for all props and state
