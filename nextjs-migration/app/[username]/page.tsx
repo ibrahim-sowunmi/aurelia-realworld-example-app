@@ -50,13 +50,13 @@ export default function ProfilePage() {
         let response;
         
         if (tab === 'favorites') {
-          response = await articleService.getList({
+          response = await articleService.getListWithFilters({
             favorited: username,
             limit: 10,
             offset: (currentPage - 1) * 10
           });
         } else {
-          response = await articleService.getList({
+          response = await articleService.getListWithFilters({
             author: username,
             limit: 10,
             offset: (currentPage - 1) * 10
@@ -91,9 +91,9 @@ export default function ProfilePage() {
       const isFollowing = profile.following;
       
       if (isFollowing) {
-        await profileService.unfollow(profile.username);
+        await profileService.unfollowProfile(profile.username);
       } else {
-        await profileService.follow(profile.username);
+        await profileService.followProfile(profile.username);
       }
       
       setProfile({

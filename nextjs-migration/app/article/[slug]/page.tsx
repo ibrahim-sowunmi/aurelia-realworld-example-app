@@ -95,7 +95,7 @@ export default function ArticlePage() {
           <div className="col-md-12">
             <div 
               dangerouslySetInnerHTML={{ 
-                __html: DOMPurify.sanitize(marked(article.body)) 
+                __html: DOMPurify.sanitize(marked.parse(article.body, { async: false }) as string) 
               }} 
             />
           </div>

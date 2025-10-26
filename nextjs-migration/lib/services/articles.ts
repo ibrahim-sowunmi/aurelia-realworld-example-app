@@ -21,6 +21,16 @@ export const articleService = {
     const endpoint = type === 'feed' ? '/articles/feed' : '/articles';
     return api.get<ArticlesResponse>(endpoint, params);
   },
+  
+  async getListWithFilters(params: {
+    limit?: number;
+    offset?: number;
+    tag?: string;
+    author?: string;
+    favorited?: string;
+  }): Promise<ArticlesResponse> {
+    return api.get<ArticlesResponse>('/articles', params);
+  },
 
   async getArticle(slug: string): Promise<Article> {
     const response = await api.get<SingleArticleResponse>(`/articles/${slug}`);
@@ -61,5 +71,13 @@ export const articleService = {
       `/articles/${slug}/favorite`
     );
     return response.article;
+  },
+  
+  async saveArticle(articleData: CreateArticleData | UpdateArticleData, slug?: string): Promise<Article> {
+    if (slug) {
+      return this.updateArticle(slug, articleData as UpdateArticleData);
+    } else {
+      return this.createArticle(articleData as CreateArticleData);
+    }
   },
 };

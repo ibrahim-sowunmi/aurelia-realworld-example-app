@@ -29,9 +29,9 @@ export function FollowButton({ profile, onToggle, children, className = '' }: Fo
     try {
       const newFollowing = !profile.following;
       if (newFollowing) {
-        await profileService.follow(profile.username);
+        await profileService.followProfile(profile.username);
       } else {
-        await profileService.unfollow(profile.username);
+        await profileService.unfollowProfile(profile.username);
       }
       onToggle(newFollowing);
     } catch (error) {

@@ -11,6 +11,7 @@ interface ArticleListProps {
   currentPage: number;
   onPageChange: (pageNumber: number) => void;
   limit?: number;
+  isLoading?: boolean;
 }
 
 export function ArticleList({ 
