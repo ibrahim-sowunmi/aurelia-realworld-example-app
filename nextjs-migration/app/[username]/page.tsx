@@ -24,7 +24,7 @@ export default function ProfilePage() {
     const fetchProfile = async () => {
       setIsLoading(true);
       try {
-        const profileData = await profileService.get(username);
+        const profileData = await profileService.getProfile(username);
         setProfile(profileData);
       } catch (error) {
         console.error('Error fetching profile:', error);
@@ -53,9 +53,9 @@ export default function ProfilePage() {
     try {
       let updatedProfile;
       if (profile.following) {
-        updatedProfile = await profileService.unfollow(profile.username);
+        updatedProfile = await profileService.unfollowProfile(profile.username);
       } else {
-        updatedProfile = await profileService.follow(profile.username);
+        updatedProfile = await profileService.followProfile(profile.username);
       }
       setProfile(updatedProfile);
     } catch (error) {

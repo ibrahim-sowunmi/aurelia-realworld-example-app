@@ -51,7 +51,7 @@ export default function ArticlePage() {
     
     setIsSubmitting(true);
     try {
-      const newComment = await commentService.createComment(slug, myComment);
+      const newComment = await commentService.createComment(slug, { body: myComment });
       setComments([...comments, newComment]);
       setMyComment('');
     } catch (error) {
