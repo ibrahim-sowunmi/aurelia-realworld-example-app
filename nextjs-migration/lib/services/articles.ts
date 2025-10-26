@@ -1,11 +1,11 @@
 import { api } from '../api';
 import type {
   Article,
-  ArticlesResponse,
+  ArticlesResponse as ArticleListResponse,
   SingleArticleResponse,
   CreateArticleData,
   UpdateArticleData,
-} from '@/types';
+} from '../../types';
 
 export const articleService = {
   async getList(
@@ -17,9 +17,9 @@ export const articleService = {
       author?: string;
       favorited?: string;
     }
-  ): Promise<ArticlesResponse> {
+  ): Promise<ArticleListResponse> {
     const endpoint = type === 'feed' ? '/articles/feed' : '/articles';
-    return api.get<ArticlesResponse>(endpoint, params);
+    return api.get<ArticleListResponse>(endpoint, params);
   },
 
   async getArticle(slug: string): Promise<Article> {
