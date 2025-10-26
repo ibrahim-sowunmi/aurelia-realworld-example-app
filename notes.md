@@ -1,5 +1,30 @@
 # Aurelia to Next.js Migration Notes
 
+## Authentication Protection
+
+### Aurelia Implementation
+- `AuthorizeStep` class in `src/app.js`
+- Added to router pipeline with `config.addAuthorizeStep(AuthorizeStep)`
+- Routes with `settings: {auth: true}` require authentication
+- Redirects to login page if user is not authenticated
+
+### Next.js Implementation
+- Created a client `ProtectedRoute` component that:
+  - Uses `useAuth()` hook to check `isAuthenticated` and `isLoading`
+  - Redirects to `/login` if not authenticated
+  - Shows loading state while checking authentication
+  - Renders children only if authenticated
+- Added layout components for protected routes:
+  - `app/settings/layout.tsx`
+  - `app/editor/[[slug]]/layout.tsx`
+- Both layouts wrap their children with the `ProtectedRoute` component
+- Protected routes work with the App Router structure
+- Maintains the same behavior as the original Aurelia application
+
+### Protected Routes
+- `/settings` - User settings page
+- `/editor/[[slug]]` - Create/edit article page (optional slug parameter)
+
 ## Home Component Analysis
 
 ### Source Files
