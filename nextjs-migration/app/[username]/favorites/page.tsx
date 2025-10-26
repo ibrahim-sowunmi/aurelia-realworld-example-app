@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import ArticleList from '../../components/ArticleList';
-import { articleService } from '../../lib/services/articles';
-import type { Article } from '../../types';
+import ArticleList from '../../../components/ArticleList';
+import { articleService } from '../../../lib/services/articles';
+import type { Article } from '../../../types';
 
-export default function ProfilePage({ 
-  params 
-}: { 
-  params: { username: string } 
+export default function ProfileFavoritesPage({
+  params
+}: {
+  params: { username: string }
 }) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +16,7 @@ export default function ProfilePage({
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number[]>([]);
   const limit = 10;
-
+  
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -24,7 +24,7 @@ export default function ProfilePage({
         const queryParams = {
           limit,
           offset: limit * (currentPage - 1),
-          author: params.username
+          favorited: params.username
         };
         
         const response = await articleService.getList('all', queryParams);
@@ -35,8 +35,8 @@ export default function ProfilePage({
         
         setError(null);
       } catch (err) {
-        console.error('Failed to fetch articles', err);
-        setError('Could not load articles');
+        console.error('Failed to fetch favorited articles', err);
+        setError('Could not load favorited articles');
       } finally {
         setIsLoading(false);
       }
@@ -52,7 +52,7 @@ export default function ProfilePage({
   };
   
   if (isLoading && articles.length === 0) {
-    return <div className="article-preview">Loading articles...</div>;
+    return <div className="article-preview">Loading favorited articles...</div>;
   }
   
   if (error) {

@@ -25,7 +25,7 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     
     setIsSubmitting(true);
     try {
-      await articleService.destroy(article.slug);
+      await articleService.deleteArticle(article.slug);
       router.push('/');
     } catch (error) {
       console.error('Failed to delete article', error);
@@ -41,9 +41,9 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     
     try {
       if (article.author.following) {
-        await profileService.unfollow(article.author.username);
+        await profileService.unfollowProfile(article.author.username);
       } else {
-        await profileService.follow(article.author.username);
+        await profileService.followProfile(article.author.username);
       }
       router.refresh();
     } catch (error) {
@@ -59,9 +59,9 @@ export default function ArticleMeta({ article }: ArticleMetaProps) {
     
     try {
       if (article.favorited) {
-        await articleService.unfavorite(article.slug);
+        await articleService.unfavoriteArticle(article.slug);
       } else {
-        await articleService.favorite(article.slug);
+        await articleService.favoriteArticle(article.slug);
       }
       router.refresh();
     } catch (error) {
