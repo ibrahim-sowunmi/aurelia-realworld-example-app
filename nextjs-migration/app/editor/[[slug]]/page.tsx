@@ -125,7 +125,7 @@ export default function EditorPage() {
       }
       
       router.push(`/article/${savedArticle.slug}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving article:', error);
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);

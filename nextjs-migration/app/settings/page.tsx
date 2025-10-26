@@ -59,7 +59,7 @@ export default function SettingsPage() {
       if (formData.password) updateData.password = formData.password;
       
       await userService.updateUser(updateData);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating user:', error);
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);

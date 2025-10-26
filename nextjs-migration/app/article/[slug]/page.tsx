@@ -34,7 +34,7 @@ export default function ArticlePage() {
         
         const commentsData = await commentService.getComments(slug);
         setComments(commentsData);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching article:', error);
       } finally {
         setIsLoading(false);
