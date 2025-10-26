@@ -49,7 +49,7 @@ export default function ProfilePage() {
         await profileService.followProfile(profile.username);
       }
       
-      setProfile(prev => ({
+      setProfile((prev: any) => ({
         ...prev,
         following: !prev.following
       }));

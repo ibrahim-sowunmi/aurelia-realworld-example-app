@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { articleService } from '../../../../lib/services/articles';
+import { articleService } from '../../../lib/services/articles';
 
 export default function EditorPage() {
   const params = useParams();

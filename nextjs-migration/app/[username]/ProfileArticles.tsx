@@ -9,7 +9,7 @@ interface ProfileArticlesProps {
 }
 
 export default function ProfileArticles({ username }: ProfileArticlesProps) {
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [articlesCount, setArticlesCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +23,7 @@ export default function ProfileArticles({ username }: ProfileArticlesProps) {
   const loadArticles = async () => {
     setIsLoading(true);
     try {
-      const { articles: fetchedArticles, articlesCount: count } = await articleService.getArticles({
+      const { articles: fetchedArticles, articlesCount: count } = await articleService.getList('all', {
         author: username,
         limit: 10,
         offset: (currentPage - 1) * 10
