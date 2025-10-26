@@ -1,5 +1,78 @@
 # Aurelia to Next.js Migration Notes
 
+## Home Component Analysis
+
+### Source Files
+- `src/components/home/home-component.js`
+- `src/components/home/home-component.html`
+- Uses `article-list` custom element
+
+### Dependencies (DI)
+- `SharedState` - global app state for authentication
+- `BindingEngine` - for reactive updates
+- `ArticleService` - article data fetching
+- `TagService` - tag data fetching
+
+### Properties
+- `articles`: Article[] - current list of articles
+- `shownList`: string - 'all' or 'feed' 
+- `tags`: string[] - list of popular tags
+- `filterTag`: string - currently selected tag filter
+- `pageNumber`: number - current page
+- `totalPages`: number[] - array of page numbers
+- `currentPage`: number - active page
+- `limit`: number - articles per page
+
+### Lifecycle Hooks
+- `bind()`: Subscribes to authentication state changes
+- `unbind()`: Disposes subscription
+- `attached()`: Fetches articles and tags
+
+### Methods
+- `getArticles()`: Fetches articles based on feed type, tag, page
+- `getTags()`: Fetches popular tags
+- `setListTo(type, tag)`: Changes feed type and/or tag filter
+- `getFeedLinkClass()`: Manages feed tab styling
+- `setPageTo(pageNumber)`: Changes page
+
+### Template Bindings
+- `if.bind="isAuthenticated"` - conditional Your Feed tab
+- `repeat.for="tag of tags"` - tag list rendering
+- `click.delegate="setListTo('all')"` - tab click handler
+- `class.bind="getFeedLinkClass()"` - dynamic class
+- `article-list` element with bound properties
+
+### Next.js Implementation
+
+#### Component Structure
+- Client component with React hooks
+- ArticleList and ArticlePreview child components
+- State managed with useState
+- Side effects with useEffect
+
+#### Key Conversions
+1. **DI Injection** → Direct imports and hooks
+   - `SharedState` → `useAuth()` hook 
+   - `ArticleService` → Direct import
+   - `TagService` → Direct import
+   - `BindingEngine` → React's useState/useEffect
+
+2. **Lifecycle Hooks**
+   - `bind()/unbind()` → useEffect with cleanup
+   - `attached()` → useEffect for initial data fetching
+
+3. **Template Conversions**
+   - `if.bind` → `{condition && <Component/>}`
+   - `repeat.for` → `{array.map(item => ...)}`
+   - `click.delegate` → `onClick={handler}`
+   - `${variable}` → `{variable}`
+   - Custom element → React component
+
+4. **State Management**
+   - Two-way binding → Controlled components
+   - Observable properties → useState
+   - Side effects → useEffect with dependencies
+
 ## Auth Component Analysis
 
 ### Source Files
