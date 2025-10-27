@@ -1,0 +1,38 @@
+# Aurelia to Next.js Migration Screenshots
+
+## Home Page Comparison
+
+### Aurelia Version (port 8080)
+![Aurelia Home](/home/ubuntu/screenshots/localhost_8080_224746.png)
+
+### Next.js Version (port 3001)
+![Next.js Home](/home/ubuntu/screenshots/localhost_3001_home_224947.png)
+
+## Key UI Elements Preserved
+- Green banner with "conduit" title and tagline
+- Feed toggle with "Your Feed" and "Global Feed" tabs
+- Article preview cards with author info and favorite buttons
+- Sidebar with popular tags
+- Pagination for article list
+
+## Validation Results
+
+### Build & Type Checking
+- ✅ TypeScript compilation passed (`tsc --noEmit`)
+- ✅ Aurelia ESLint passed (`npx eslint src`)
+- ✅ Next.js production build passed (`npm run build`)
+
+### Manual Validation
+- ✅ Root page redirects to /home (middleware validation)
+- ✅ Both apps display identical UI with consistent styling
+- ✅ Both apps handle empty state identically ("No articles are here... yet.")
+- ✅ Navigation header and footer render correctly in both apps
+- ✅ Global Feed tab is active and styled correctly
+- ✅ Popular Tags sidebar displays consistently
+
+### Migration Notes
+- Authentication state is handled via useAuth() hook in Next.js (vs SharedState in Aurelia)
+- Next.js uses file-system based routing (vs centralized router in Aurelia)
+- Next.js uses Client Components for interactive elements (marked with 'use client')
+- All CSS classes from the original Aurelia templates have been preserved
+- State management migrated from BindingEngine to React hooks (useState/useEffect)
