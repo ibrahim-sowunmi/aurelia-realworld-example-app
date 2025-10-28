@@ -1,0 +1,387 @@
+{
+  "repo_notes": [
+    {
+      "content": "Use clear and concise language"
+    }
+  ],
+  "pages": [
+    {
+      "title": "Overview",
+      "purpose": "Introduce the aurelia-realworld-example-app, explaining what it is, its purpose as a RealWorld spec implementation, and the key features it demonstrates (CRUD, authentication, routing, pagination)",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Getting Started",
+      "purpose": "Guide developers through initial setup, including installing dependencies, running the dev server, building for production, and running tests",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Architecture Overview",
+      "purpose": "Explain the high-level architecture: Aurelia framework, component-based structure, service layer, routing system, and how pieces fit together",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Application Bootstrap",
+      "purpose": "Detail how the application initializes via main.js, including HttpClient configuration, feature loading, and root component setup",
+      "parent": "Architecture Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Routing System",
+      "purpose": "Explain the routing configuration in app.js, route definitions, navigation patterns, and the AuthorizeStep pipeline for protected routes",
+      "parent": "Architecture Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Component Architecture",
+      "purpose": "Describe the component structure: page components vs reusable components, data binding patterns, component composition, and lifecycle hooks",
+      "parent": "Architecture Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Service Layer",
+      "purpose": "Explain the service layer architecture, the central ApiService pattern, domain-specific services, and dependency injection",
+      "parent": "Architecture Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Authentication & Authorization",
+      "purpose": "Detail the JWT-based authentication flow, token storage, the AuthorizeStep pipeline, and how protected routes work",
+      "parent": "Architecture Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Page Components",
+      "purpose": "Overview of the main route-level components that represent different pages in the application",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Home Component",
+      "purpose": "Detailed documentation of the Home page: feed toggles, article listing, tag filtering, pagination, and interaction with ArticleService and TagService",
+      "parent": "Page Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Article Component",
+      "purpose": "Document the Article detail page: markdown rendering, comment system, article actions, and how it integrates ArticleService and CommentService",
+      "parent": "Page Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Profile Component",
+      "purpose": "Explain the Profile page: user information display, nested routes for articles/favorites, follow functionality, and ProfileService integration",
+      "parent": "Page Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Auth Component",
+      "purpose": "Document the authentication pages: login/register forms, shared component usage, error handling, and navigation after successful auth",
+      "parent": "Page Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Editor & Settings Components",
+      "purpose": "Document the Editor (article creation/editing) and Settings (user profile management) pages, their protected status, and functionality",
+      "parent": "Page Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Reusable Components",
+      "purpose": "Overview of shared UI components used across multiple page components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Article Preview",
+      "purpose": "Document the ArticlePreview component: structure, data binding, navigation to articles/profiles, and favorite button integration",
+      "parent": "Reusable Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Comment Component",
+      "purpose": "Explain the Comment component: display structure, author information, delete functionality, and permission checking",
+      "parent": "Reusable Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Favorite Button",
+      "purpose": "Document the FavoriteButton: toggle functionality, authentication checks, API interaction, and visual states",
+      "parent": "Reusable Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Follow Button",
+      "purpose": "Document the FollowButton: toggle functionality, authentication checks, ProfileService integration, and callback pattern",
+      "parent": "Reusable Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Article Meta",
+      "purpose": "Document the ArticleMeta component: author display, date formatting, action buttons integration, and reuse patterns",
+      "parent": "Reusable Components",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Services",
+      "purpose": "Detailed documentation of the service layer that handles all backend communication and business logic",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "API Service",
+      "purpose": "Document the central ApiService: HTTP methods (GET/POST/PUT/DELETE), request configuration, JWT integration, and error handling",
+      "parent": "Services",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "JWT Service",
+      "purpose": "Explain JWT token management: localStorage interaction, token validation, authorization header generation, and lifecycle",
+      "parent": "Services",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "HTTP Infrastructure",
+      "purpose": "Document supporting HTTP infrastructure: HttpInterceptor for auth headers, service-helper for response processing, and HttpError handling",
+      "parent": "Services",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Domain Services",
+      "purpose": "Document domain-specific services (UserService, ArticleService, ProfileService, CommentService, TagService) and their API abstractions",
+      "parent": "Services",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "State Management",
+      "purpose": "Explain the SharedState pattern: global authentication state, currentUser tracking, and how components observe state changes",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Utilities & Helpers",
+      "purpose": "Document value converters and utility functions: markdown rendering, date formatting, and other transformation utilities",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Build System",
+      "purpose": "Overview of the build toolchain: Webpack, Babel, Aurelia CLI, and how they work together to compile the application",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Webpack Configuration",
+      "purpose": "Detail webpack.config.js: entry points, loaders (babel, html, css), plugins (Aurelia, HtmlWebpack, ExtractText), and environment-specific builds",
+      "parent": "Build System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Babel Configuration",
+      "purpose": "Explain .babelrc.js: presets, plugins (decorators, class properties), environment-specific settings, and transpilation targets",
+      "parent": "Build System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Aurelia CLI & Project Configuration",
+      "purpose": "Document aurelia.json: project structure, bundler settings, transpiler config, paths configuration, and CLI integration",
+      "parent": "Build System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Build Tasks",
+      "purpose": "Document Gulp tasks: environment configuration, CSS processing, file watching, and task orchestration",
+      "parent": "Build System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Testing",
+      "purpose": "Overview of the testing infrastructure: unit tests with Karma, integration tests with Protractor, and testing patterns",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Unit Testing with Karma",
+      "purpose": "Document Karma configuration: test file patterns, preprocessors, coverage reporting, and how to run unit tests",
+      "parent": "Testing",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Integration Testing with Protractor",
+      "purpose": "Explain Protractor setup for E2E tests and integration test patterns",
+      "parent": "Testing",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Deployment & CI/CD",
+      "purpose": "Document the deployment pipeline: Travis CI configuration, automated builds, and GitHub Pages deployment",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Travis CI Pipeline",
+      "purpose": "Detail .travis.yml: build stages, test execution, environment setup, and deployment triggers",
+      "parent": "Deployment & CI/CD",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "GitHub Pages Deployment",
+      "purpose": "Explain the automated deployment to GitHub Pages: dist directory publishing, configuration, and access patterns",
+      "parent": "Deployment & CI/CD",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Dependencies & Package Management",
+      "purpose": "Document project dependencies: package.json structure, key runtime and dev dependencies, version management with yarn.lock",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    }
+  ]
+}
