@@ -39,7 +39,11 @@ function getHeaders(): HeadersInit {
 }
 
 export const api = {
-  async get<T>(path: string, params?: Record<string, any>): Promise<T> {
+  async get<T>(
+    path: string, 
+    params?: Record<string, any>, 
+    options?: { next?: { revalidate?: number, tags?: string[] } }
+  ): Promise<T> {
     const queryString = params
       ? '?' + new URLSearchParams(params).toString()
       : '';
@@ -47,6 +51,7 @@ export const api = {
     const response = await fetch(`${config.api_url}${path}${queryString}`, {
       method: 'GET',
       headers: getHeaders(),
+      ...options
     });
 
     return handleResponse<T>(response);

@@ -19,11 +19,20 @@ export const articleService = {
     }
   ): Promise<ArticlesResponse> {
     const endpoint = type === 'feed' ? '/articles/feed' : '/articles';
-    return api.get<ArticlesResponse>(endpoint, params);
+    
+    if (type === 'feed') {
+      return api.get<ArticlesResponse>(endpoint, params);
+    }
+    
+    return api.get<ArticlesResponse>(endpoint, params, {
+      next: { revalidate: 60, tags: ['articles'] }
+    });
   },
 
   async getArticle(slug: string): Promise<Article> {
-    const response = await api.get<SingleArticleResponse>(`/articles/${slug}`);
+    const response = await api.get<SingleArticleResponse>(`/articles/${slug}`, undefined, {
+      next: { revalidate: 300, tags: [`article-${slug}`] }
+    });
     return response.article;
   },
 

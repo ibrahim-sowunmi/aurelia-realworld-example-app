@@ -10,7 +10,9 @@
   "scripts": {
     "build": "au build --env prod",
     "start": "nps",
-    "test": "nps test"
+    "test": "nps test",
+    "dev:aur": "webpack-dev-server -d --devtool '#source-map' --inline --env.server",
+    "dev:next": "cd nextjs-migration && pnpm dev"
   },
   "main": "dist/app.bundle.js",
   "engines": {

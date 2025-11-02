@@ -1,19 +1,38 @@
 import { config } from './config';
 
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop()?.split(';').shift() || null;
+  }
+  return null;
+}
+
+function setCookie(name: string, value: string, days: number = 365): void {
+  if (typeof document === 'undefined') return;
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+}
+
+function deleteCookie(name: string): void {
+  if (typeof document === 'undefined') return;
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+}
+
 export const jwtService = {
   getToken(): string | null {
-    if (typeof window === 'undefined') return null;
-    return window.localStorage.getItem(config.token_key);
+    return getCookie(config.token_key);
   },
 
   saveToken(token: string): void {
-    if (typeof window === 'undefined') return;
-    window.localStorage.setItem(config.token_key, token);
+    setCookie(config.token_key, token);
   },
 
   destroyToken(): void {
-    if (typeof window === 'undefined') return;
-    window.localStorage.removeItem(config.token_key);
+    deleteCookie(config.token_key);
   },
 
   isTokenValid(): boolean {

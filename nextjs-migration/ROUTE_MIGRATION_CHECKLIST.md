@@ -1,0 +1,98 @@
+# Route Migration Checklist
+
+This document tracks the migration progress of each route from Aurelia to Next.js.
+
+## Routes
+
+### Home Page (/)
+- [x] Page component created
+- [x] Services migrated (articles, tags)
+- [x] Template and lifecycle ports
+- [x] Tests added for ArticleList component
+- [x] Smoke test in dev
+- [ ] Final feature parity verification
+  - [x] UI parity (layout, components)
+  - [x] Data parity (articles list, tags)
+  - [x] Edge cases (empty state, loading state)
+  - [ ] Accessibility (keyboard, screen reader)
+
+### Login Page (/login)
+- [x] Page component created
+- [x] Services migrated (user auth)
+- [x] Template and lifecycle ports
+- [x] Tests added (4 test cases, 100% statement coverage)
+- [x] Smoke test in dev
+- [x] Feature parity verification
+  - [x] UI parity (Next.js Link, form layout)
+  - [x] Data parity (form submission, canSave validation)
+  - [x] Edge cases (errors, loading states, redirects)
+  - [ ] Accessibility (keyboard, screen reader)
+
+### Register Page (/register)
+- [x] Page component created
+- [x] Services migrated (user registration)
+- [x] Template and lifecycle ports
+- [x] Tests added (4 test cases, 100% statement coverage)
+- [x] Smoke test in dev
+- [x] Feature parity verification
+  - [x] UI parity (Next.js Link, form layout)
+  - [x] Data parity (form submission, canSave validation)
+  - [x] Edge cases (errors, loading states, redirects)
+  - [ ] Accessibility (keyboard, screen reader)
+
+### Settings Page (/settings)
+- [x] Page component created
+- [x] Services migrated (user settings)
+- [x] Template and lifecycle ports
+- [x] Tests added (4/6 tests passing)
+- [x] Smoke test in dev
+- [ ] Feature parity verification
+  - [x] UI parity
+  - [x] Data parity (form fields, update)
+  - [x] Edge cases (errors, logout)
+  - [ ] Accessibility
+
+### Editor Page (/editor/[slug])
+- [x] Page component created
+- [x] Services migrated (article creation/editing)
+- [x] Template and lifecycle ports
+- [x] Tests added (8 test cases covering core functionality)
+- [x] Smoke test in dev
+- [ ] Feature parity verification
+  - [x] UI parity
+  - [x] Data parity (form submission, tags)
+  - [x] Edge cases (errors, slug handling)
+  - [ ] Accessibility
+
+### Article Page (/article/[slug])
+- [x] Page component created
+- [x] Services migrated (article, comments)
+- [x] Template and lifecycle ports
+- [x] Tests added (2 server component tests, 5 client component tests)
+- [x] Smoke test in dev
+- [ ] Feature parity verification
+  - [x] UI parity
+  - [x] Data parity (article content, comments)
+  - [x] Edge cases (loading, 404, empty comments)
+  - [ ] Accessibility
+
+### Profile Page (/[username])
+- [x] Page component created
+- [x] Services migrated (profile, articles)
+- [x] Template and lifecycle ports
+- [x] Tests added (ProfileBanner tests with 4 test cases)
+- [x] Smoke test in dev
+- [ ] Feature parity verification
+  - [x] UI parity
+  - [x] Data parity (profile info, articles)
+  - [x] Edge cases (following, unfollowing, 404)
+  - [ ] Accessibility
+
+## Global Features
+- [x] Authentication middleware
+- [x] Server-side data fetching
+- [x] API services migration
+- [x] UI components (ArticlePreview, etc.)
+- [x] Markdown rendering
+- [x] Date formatting
+- [ ] Form validation

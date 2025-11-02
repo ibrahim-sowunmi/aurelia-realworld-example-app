@@ -4,7 +4,9 @@ import type { Comment, CommentsResponse, CreateCommentData } from '@/types';
 export const commentService = {
   async getComments(slug: string): Promise<Comment[]> {
     const response = await api.get<CommentsResponse>(
-      `/articles/${slug}/comments`
+      `/articles/${slug}/comments`,
+      undefined,
+      { next: { revalidate: 60, tags: [`article-${slug}-comments`] } }
     );
     return response.comments;
   },
